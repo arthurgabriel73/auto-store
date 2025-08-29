@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
+import static java.util.UUID.randomUUID;
+
 
 public class UserTest {
+
+    private static final UserId userId = new UserId(randomUUID());
     private static final FullName fullName = new FullName("John", "Doe");
     private static final Cpf cpf = new Cpf("380.229.590-06");
     private static final Email email = new Email("johndoe123@mail.com");
@@ -27,7 +31,7 @@ public class UserTest {
         // Arrange & Act
         var now = LocalDateTime.now();
         User user = User.builder()
-                .id(1L)
+                .id(userId)
                 .fullName(fullName)
                 .cpf(cpf)
                 .email(email)
@@ -37,7 +41,7 @@ public class UserTest {
                 .build();
 
         // Assert
-        assert user.getId().equals(1L);
+        assert user.getId().equals(userId);
         assert user.getFullName().equals(fullName);
         assert user.getCpf().equals(cpf);
         assert user.getEmail().equals(email);
@@ -68,4 +72,5 @@ public class UserTest {
         assert user.getCreatedAt().equals(now);
         assert user.getUpdatedAt().equals(now);
     }
+
 }
