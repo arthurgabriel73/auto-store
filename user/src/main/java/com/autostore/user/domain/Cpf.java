@@ -12,6 +12,7 @@ public record Cpf(String value) {
     }
 
     private boolean validate(String cpf) {
+        if (cpf == null) return false;
         cpf = clean(cpf);
         if (isValidLength(cpf)) return false;
         if (hasAllDigitsEqual(cpf)) return false;
