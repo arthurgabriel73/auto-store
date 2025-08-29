@@ -2,5 +2,5 @@
 
 test:
 	@echo "\033[0;36mRunning all tests...\033[0m"
-	(cd user && ./gradlew clean test)
+	(cd user && ./gradlew clean test --no-daemon)
 	@echo "\033[0;32mAll tests completed successfully!\033[0m"
