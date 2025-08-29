@@ -1,4 +1,4 @@
-name: Run build and tests
+name: Run Tests
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and run tests
         run: |
-          make build-test
+          make test
 
       - name: Upload test results
         if: always()
