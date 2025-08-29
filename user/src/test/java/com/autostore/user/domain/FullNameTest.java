@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class FullNameTest {
+
     private static final String TOO_LONG_NAME =
             "ThisTooLongNameIsWayTooLongToBeValidBecauseItHas101CHARACTERSAndSoItShouldThrowAValidationExceptionnn";
 
@@ -61,4 +62,5 @@ public class FullNameTest {
         // Act & Assert
         assertThrows(ValidationException.class, () -> new FullName("John", invalidLastName));
     }
+
 }
