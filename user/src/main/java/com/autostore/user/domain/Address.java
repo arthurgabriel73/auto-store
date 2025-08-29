@@ -16,37 +16,29 @@ public record Address(
         String country
 ) {
 
+    private static final int MAX_FIELD_LENGTH = 100;
+
     public Address {
-        validateStreet(street);
-        validateNumber(number);
-        validateCity(city);
-        validateState(state);
-        validateCountry(country);
+        validateRequiredField(street, "Street");
+        validateRequiredField(number, "Number");
+        validateRequiredField(city, "City");
+        validateRequiredField(state, "State");
+        validateRequiredField(country, "Country");
     }
 
-    private void validateStreet(String street) {
-        if (street == null || street.trim().isEmpty() || street.length() > 100)
-            throw new ValidationException("Street must be between 1 and 100 characters");
+    private static void validateRequiredField(String value, String fieldName) {
+        if (isNullOrBlank(value))
+            throw new ValidationException(fieldName + " cannot be null or empty");
+        if (exceedsMaxLength(value))
+            throw new ValidationException(fieldName + " cannot exceed " + MAX_FIELD_LENGTH + " characters");
     }
 
-    private void validateNumber(String number) {
-        if (number == null || number.trim().isEmpty() || number.length() > 100)
-            throw new ValidationException("Number must be between 1 and 100 characters");
+    private static boolean isNullOrBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
-    private void validateCity(String city) {
-        if (city == null || city.trim().isEmpty() || city.length() > 100)
-            throw new ValidationException("City must be between 1 and 100 characters");
-    }
-
-    private void validateState(String state) {
-        if (state == null || state.trim().isEmpty() || state.length() > 100)
-            throw new ValidationException("State must be between 1 and 100 characters");
-    }
-
-    private void validateCountry(String country) {
-        if (country == null || country.trim().isEmpty() || country.length() > 100)
-            throw new ValidationException("Country must be between 1 and 100 characters");
+    private static boolean exceedsMaxLength(String value) {
+        return value.length() > MAX_FIELD_LENGTH;
     }
 
 }
