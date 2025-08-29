@@ -36,3 +36,15 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.9
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
