@@ -107,4 +107,22 @@ public class AddressTest {
         ));
     }
 
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "  ", "\t", "\n", TOO_LONG_STRING})
+    void testShouldThrowExceptionWhenCityIsInvalid(String invalidCity) {
+        // Act & Assert
+        assertThrows(ValidationException.class, () -> new Address(
+                1L,
+                "Main Street",
+                "123",
+                "Downtown",
+                invalidCity,
+                "IL",
+                "62701",
+                "Apt 4B",
+                "USA"
+        ));
+    }
+
 }
