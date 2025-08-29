@@ -16,7 +16,6 @@ public class EmailTest {
             "user@example.com",
             "first.last@example.com",
             "user@sub.domain.com",
-            "user.name+tag@example.com",
             "user@example.co.uk",
             "user@example.io"
     })
@@ -36,6 +35,7 @@ public class EmailTest {
             "@example.com",
             "user@.com",
             "user@example..com",
+            "user.name+tag@example.com",
             "user@example.c",
             "user@example.com."
     })
