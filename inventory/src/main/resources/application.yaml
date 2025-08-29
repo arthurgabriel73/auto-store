@@ -1,0 +1,7 @@
+server:
+  port: ${SERVER_PORT:3500}
+
+spring:
+
+  application:
+    name: inventory

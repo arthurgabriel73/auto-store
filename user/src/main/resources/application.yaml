@@ -1,0 +1,7 @@
+server:
+  port: ${SERVER_PORT:3100}
+
+spring:
+
+  application:
+    name: user
