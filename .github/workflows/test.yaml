@@ -1,4 +1,4 @@
-name: Run build and tests
+name: Run Tests
 
 on:
   pull_request:
@@ -22,11 +22,4 @@ jobs:
 
       - name: Build and run tests
         run: |
-          make build-test
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: build/test-results/
+          make test
