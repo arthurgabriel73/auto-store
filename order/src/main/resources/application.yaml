@@ -5,3 +5,20 @@ spring:
 
   application:
     name: order
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    consumer:
+      group-id: order-group
+      auto-offset-reset: latest
+
+  data:
+    mongodb:
+      database: admin
+      uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017}
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: OFF
