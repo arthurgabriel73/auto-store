@@ -33,3 +33,7 @@ Feature: User Registration
     When I search for the user by cpf "119.557.420-73"
     Then I should receive a response with status code 200
     And I should find the user by cpf "119.557.420-73" with the correct details
+
+  Scenario: Attempt to find a non-existent user
+    When I search for the user by cpf "877.245.980-88"
+    Then I should receive a response with status code 404
