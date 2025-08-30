@@ -18,7 +18,7 @@ public class CommonSteps {
     @Then("I should receive a response with status code {int}")
     public void i_should_receive_a_response_with_status_code(Integer statusCode) {
         assertNotNull(cucumberContext.getResponse());
-        assertEquals(cucumberContext.getResponse().getStatusCode().value(), statusCode);
+        assertEquals(statusCode, cucumberContext.getResponse().getStatusCode().value());
     }
 
 }

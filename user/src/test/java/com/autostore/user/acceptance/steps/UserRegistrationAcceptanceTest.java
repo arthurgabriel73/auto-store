@@ -44,6 +44,90 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
         );
     }
 
+    @Given("I have registered a user with email {string}")
+    public void i_have_registered_a_user_with_email(String email) {
+        var requestData = Map.ofEntries(
+                Map.entry("firstName", "John"),
+                Map.entry("lastName", "Doe"),
+                Map.entry("cpf", "047.797.980-78"),
+                Map.entry("email", email),
+                Map.entry("street", "Main St"),
+                Map.entry("number", "123"),
+                Map.entry("neighborhood", "Downtown"),
+                Map.entry("city", "Metropolis"),
+                Map.entry("state", "State"),
+                Map.entry("zipCode", "12345"),
+                Map.entry("complement", "Apt 1"),
+                Map.entry("country", "Country")
+        );
+        testRestTemplate.postForEntity(
+                BASE_URL + USERS_URI,
+                requestData,
+                String.class
+        );
+    }
+
+    @Given("I have registered a user with cpf {string}")
+    public void i_have_registered_a_user_with_cpf(String cpf) {
+        var requestData = Map.ofEntries(
+                Map.entry("firstName", "John"),
+                Map.entry("lastName", "Doe"),
+                Map.entry("cpf", cpf),
+                Map.entry("email", "john@mail.com"),
+                Map.entry("street", "Main St"),
+                Map.entry("number", "123"),
+                Map.entry("neighborhood", "Downtown"),
+                Map.entry("city", "Metropolis"),
+                Map.entry("state", "State"),
+                Map.entry("zipCode", "12345"),
+                Map.entry("complement", "Apt 1"),
+                Map.entry("country", "Country")
+        );
+        testRestTemplate.postForEntity(
+                BASE_URL + USERS_URI,
+                requestData,
+                String.class
+        );
+    }
+
+
+    @Given("I have a user registration form with email {string}")
+    public void i_have_a_user_registration_form_with_email(String email) {
+        cucumberContextHolder.setRequestData(Map.ofEntries(
+                Map.entry("firstName", "John"),
+                Map.entry("lastName", "Doe"),
+                Map.entry("cpf", "047.797.980-78"),
+                Map.entry("email", email),
+                Map.entry("street", "Main St"),
+                Map.entry("number", "123"),
+                Map.entry("neighborhood", "Downtown"),
+                Map.entry("city", "Metropolis"),
+                Map.entry("state", "State"),
+                Map.entry("zipCode", "12345"),
+                Map.entry("complement", "Apt 1"),
+                Map.entry("country", "Country")
+        ));
+    }
+
+    @Given("I have a user registration form with cpf {string}")
+    public void i_have_a_user_registration_form_with_cpf(String cpf) {
+        cucumberContextHolder.setRequestData(Map.ofEntries(
+                Map.entry("firstName", "John"),
+                Map.entry("lastName", "Doe"),
+                Map.entry("cpf", cpf),
+                Map.entry("email", "john@mail.com"),
+                Map.entry("street", "Main St"),
+                Map.entry("number", "123"),
+                Map.entry("neighborhood", "Downtown"),
+                Map.entry("city", "Metropolis"),
+                Map.entry("state", "State"),
+                Map.entry("zipCode", "12345"),
+                Map.entry("complement", "Apt 1"),
+                Map.entry("country", "Country")
+        ));
+    }
+
+
     @When("I submit the registration form")
     public void i_submit_the_registration_form() {
         var response = testRestTemplate.postForEntity(
