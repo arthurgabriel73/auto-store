@@ -1,15 +1,15 @@
-package com.autostore.user.domain.exception;
+package com.autostore.user.application.exception;
 
 
 import lombok.Setter;
 
 
 @Setter
-public class BusinessException extends RuntimeException {
+public class ApplicationException extends RuntimeException {
 
     private String message;
 
-    public BusinessException(String message) {
+    public ApplicationException(String message) {
         super(message);
         this.message = message;
     }

@@ -1,6 +1,8 @@
 package com.autostore.user.application;
 
 
+import com.autostore.user.application.exception.CpfAlreadyRegisteredException;
+import com.autostore.user.application.exception.EmailAlreadyRegisteredException;
 import com.autostore.user.application.port.driver.model.command.RegisterUserCommand;
 import com.autostore.user.application.usecase.RegisterUserUseCase;
 import com.autostore.user.domain.Cpf;
@@ -51,7 +53,7 @@ public class RegisterUserUseCaseTest {
 
         // Assert
         assertNotNull(output);
-        assertNotNull(output.userId());
+        assertNotNull(output.getUserId());
         assertNotNull(userRepository.findByCpf(Cpf.of(command.cpf())));
     }
 
@@ -62,6 +64,54 @@ public class RegisterUserUseCaseTest {
 
         // Act & Assert
         assertThrows(BusinessException.class, () -> sut.execute(command));
+    }
+
+    @Test
+    void testShouldThrowExceptionWhenUserAlreadyExistsByEmail() {
+        // Arrange
+        userScoreService.setApproved(true);
+        RegisterUserCommand command = new RegisterUserCommand(
+                "John",
+                "Doe",
+                "296.359.920-09",
+                "john@mail.com",
+                "Main St",
+                "123",
+                "Downtown",
+                "Metropolis",
+                "State",
+                "12345",
+                "Apt 1",
+                "Country"
+        );
+        sut.execute(command);
+
+        // Act & Assert
+        assertThrows(EmailAlreadyRegisteredException.class, () -> sut.execute(command));
+    }
+
+    @Test
+    void testShouldThrowExceptionWhenUserAlreadyExistsByCpf() {
+        // Arrange
+        userScoreService.setApproved(true);
+        RegisterUserCommand command = new RegisterUserCommand(
+                "John",
+                "Doe",
+                "047.797.980-78",
+                "john2@mail.com",
+                "Main St",
+                "123",
+                "Downtown",
+                "Metropolis",
+                "State",
+                "12345",
+                "Apt 1",
+                "Country"
+        );
+        sut.execute(command);
+
+        // Act & Assert
+        assertThrows(CpfAlreadyRegisteredException.class, () -> sut.execute(command));
     }
 
 }
