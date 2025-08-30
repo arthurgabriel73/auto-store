@@ -4,12 +4,14 @@ package com.autostore.user.application;
 import com.autostore.user.application.port.driver.model.command.RegisterUserCommand;
 import com.autostore.user.application.usecase.RegisterUserUseCase;
 import com.autostore.user.domain.Cpf;
+import com.autostore.user.domain.exception.BusinessException;
 import com.autostore.user.infrastructure.adapter.driven.api.FakeUserScoreService;
 import com.autostore.user.infrastructure.adapter.driven.persistence.InMemoryUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class RegisterUserUseCaseTest {
@@ -54,7 +56,12 @@ public class RegisterUserUseCaseTest {
     }
 
     @Test
-    void testShouldThrowBusinessExceptionWhenUserNotApproved() {
+    void testShouldThrowBusinessExceptionWhenUserCpfIsNotApproved() {
+        // Arrange
+        userScoreService.setApproved(false);
+
+        // Act & Assert
+        assertThrows(BusinessException.class, () -> sut.execute(command));
     }
 
 }
