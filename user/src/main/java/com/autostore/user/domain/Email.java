@@ -28,4 +28,12 @@ public class Email {
         return email.toLowerCase().matches(EMAIL_REGEX);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Email email = (Email) obj;
+        return value.equals(email.value);
+    }
+
 }
