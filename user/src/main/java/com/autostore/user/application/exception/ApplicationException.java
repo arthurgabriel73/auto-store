@@ -1,11 +1,11 @@
-package com.autostore.user.domain.exception;
+package com.autostore.user.application.exception;
 
 
-public class BusinessException extends RuntimeException {
+public class ApplicationException extends RuntimeException {
 
     private final String message;
 
-    public BusinessException(String message) {
+    public ApplicationException(String message) {
         super(message);
         this.message = message;
     }

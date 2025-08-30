@@ -22,4 +22,4 @@ jobs:
 
       - name: Build and run tests
         run: |
-          make test
+          make ci-test-suite

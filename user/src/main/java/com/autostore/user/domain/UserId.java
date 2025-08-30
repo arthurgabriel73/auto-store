@@ -24,4 +24,8 @@ public class UserId {
         return id.toString();
     }
 
+    public UUID value() {
+        return id;
+    }
+
 }

@@ -21,6 +21,14 @@ public class Cpf {
         return value;
     }
 
+    public String formatted() {
+        return String.format("%s.%s.%s-%s",
+                value.substring(0, 3),
+                value.substring(3, 6),
+                value.substring(6, 9),
+                value.substring(9));
+    }
+
     private boolean validate(String cpf) {
         if (cpf == null) return false;
         cpf = clean(cpf);
