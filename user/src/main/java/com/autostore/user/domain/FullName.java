@@ -2,8 +2,10 @@ package com.autostore.user.domain;
 
 
 import com.autostore.user.domain.exception.ValidationException;
+import lombok.Getter;
 
 
+@Getter
 public class FullName {
 
     private final String firstName;

@@ -16,6 +16,10 @@ public class UserId {
         return new UserId(UUID.randomUUID());
     }
 
+    public static UserId of(String id) {
+        return new UserId(UUID.fromString(id));
+    }
+
     public String string() {
         return id.toString();
     }
