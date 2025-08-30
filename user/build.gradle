@@ -44,6 +44,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-console-standalone:1.10.2")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.23.0")
     testImplementation("org.junit.platform:junit-platform-suite-api:1.9.3")
+    implementation 'com.github.javafaker:javafaker:1.0.2'
 
 }
 
