@@ -57,4 +57,12 @@ public class Cpf {
         return cpf.substring(9);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Cpf cpf = (Cpf) obj;
+        return value.equals(cpf.value);
+    }
+
 }
