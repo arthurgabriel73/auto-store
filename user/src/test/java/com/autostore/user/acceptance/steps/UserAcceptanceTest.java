@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @Transactional
-public class UserRegistrationAcceptanceTest extends BaseScenario {
+public class UserAcceptanceTest extends BaseScenario {
 
     private final String BASE_URL = "http://localhost:8080";
     private final String USERS_URI = "/api/v1/user";
@@ -72,7 +72,7 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
     }
 
     @Then("I should see the new user id and its name")
-    public void i_should_see_the_new_user_id_and_its_name() throws Exception {
+    public void i_should_see_the_new_user_id_and_its_name() {
         var response = cucumberContextHolder.getResponse();
         assertNotNull(response);
         var body = response.getBody();

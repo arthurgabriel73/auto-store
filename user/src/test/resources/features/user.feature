@@ -1,7 +1,7 @@
-Feature: User Registration
+Feature: User
   As a system administrator
   I want to register new users
-  So that they can use the system
+  So that they can use the system and I can manage their information
 
   Scenario: Successfully register a new user
     Given I have an user registration form with cpf "530.916.230-50" and email "ratyas@mail.com"
