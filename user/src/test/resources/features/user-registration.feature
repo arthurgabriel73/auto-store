@@ -26,3 +26,8 @@ Feature: User Registration
     Given I have a user registration form with email "invalid-email"
     When I submit the registration form
     Then I should receive a response with status code 400
+
+  Scenario: Attempt to find a user after registration
+    Given I have registered a user with cpf "530.916.230-50"
+    When I search for the user by cpf "530.916.230-50"
+    Then I should find the user with the correct details

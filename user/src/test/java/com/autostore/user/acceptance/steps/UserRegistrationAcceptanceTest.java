@@ -138,6 +138,15 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
         cucumberContextHolder.setResponse(response);
     }
 
+    @When("I search for the user by cpf {string}")
+    public void i_search_for_the_user_by_cpf(String cpf) {
+        var response = testRestTemplate.getForEntity(
+                BASE_URL + USERS_URI + "/cpf/" + cpf,
+                String.class
+        );
+        cucumberContextHolder.setResponse(response);
+    }
+
     @Then("I should see the new user id")
     public void i_should_see_the_new_user_id() {
         var response = cucumberContextHolder.getResponse();
@@ -152,6 +161,17 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
         assertNotNull(response);
 
         var user = userRepository.findByCpf(Cpf.of("047.797.980-78")).orElse(null);
+        assertNotNull(user);
+        assertNotNull(user.getCpf());
+        assertNotNull(user.getEmail());
+    }
+
+    @Then("I should find the user with the correct details")
+    public void i_should_find_the_user_with_the_correct_details() {
+        var response = cucumberContextHolder.getResponse();
+        assertNotNull(response);
+
+        var user = userRepository.findByCpf(Cpf.of("530.916.230-50")).orElse(null);
         assertNotNull(user);
         assertNotNull(user.getCpf());
         assertNotNull(user.getEmail());
