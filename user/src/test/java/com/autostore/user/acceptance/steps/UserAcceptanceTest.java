@@ -6,7 +6,6 @@ import com.autostore.user.application.port.driver.model.command.RegisterUserComm
 import com.autostore.user.domain.Cpf;
 import com.autostore.user.infrastructure.adapter.util.JsonUtil;
 import com.autostore.user.util.TestUserDataFactory;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -51,7 +50,6 @@ public class UserAcceptanceTest extends BaseScenario {
         );
     }
 
-
     @When("I submit the registration form")
     public void i_submit_the_registration_form() {
         var response = testRestTemplate.postForEntity(
@@ -78,9 +76,9 @@ public class UserAcceptanceTest extends BaseScenario {
         assertNotNull(output.userId());
         assertDoesNotThrow(() -> UUID.fromString(output.userId()));
     }
-
-    @And("the user with cpf {string} should be saved in the database with the correct details")
-    public void the_user_should_be_saved_in_the_database_with_correct_details(String cpf) {
+    
+    @Then("I should find the user by cpf {string} with the correct details")
+    public void i_should_find_the_user_with_the_correct_details(String cpf) {
         var response = cucumberContextHolder.getResponse();
         assertNotNull(response);
 
@@ -90,8 +88,8 @@ public class UserAcceptanceTest extends BaseScenario {
         assertNotNull(user.getEmail());
     }
 
-    @Then("I should find the user by cpf {string} with the correct details")
-    public void i_should_find_the_user_with_the_correct_details(String cpf) {
+    @Then("the user with cpf {string} should be saved in the database with the correct details")
+    public void the_user_should_be_saved_in_the_database_with_correct_details(String cpf) {
         var response = cucumberContextHolder.getResponse();
         assertNotNull(response);
 
