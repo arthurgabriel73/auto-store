@@ -3,7 +3,6 @@ package com.autostore.user.acceptance.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,22 +25,16 @@ import javax.sql.DataSource;
 public class CucumberSpringConfiguration {
 
     @Container
-    static PostgreSQLContainer postgresContainer;
+    static PostgreSQLContainer<?> postgresContainer;
 
     @BeforeAll
     public static void setup() {
-        postgresContainer = new PostgreSQLContainer("postgres:16.3")
+        postgresContainer = new PostgreSQLContainer<>("postgres:16.3")
                 .withDatabaseName("user-test-db")
                 .withUsername("postgres-test-user")
                 .withPassword("postgres-test-password");
         postgresContainer.start();
         System.out.println(postgresContainer.getJdbcUrl());
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        System.out.println("closing DB connection");
-        postgresContainer.stop();
     }
 
 
