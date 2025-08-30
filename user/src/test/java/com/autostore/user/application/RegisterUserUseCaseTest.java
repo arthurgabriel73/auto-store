@@ -53,7 +53,7 @@ public class RegisterUserUseCaseTest {
 
         // Assert
         assertNotNull(output);
-        assertNotNull(output.getUserId());
+        assertNotNull(output.userId());
         assertNotNull(userRepository.findByCpf(Cpf.of(command.cpf())));
     }
 

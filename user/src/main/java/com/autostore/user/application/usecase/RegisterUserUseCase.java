@@ -44,7 +44,7 @@ public class RegisterUserUseCase implements RegisterUserDriverPort {
 
     private RegisterUserCommandOutput saveUser(User user) {
         User savedUser = userRepository.save(user);
-        return new RegisterUserCommandOutput(savedUser.getId());
+        return RegisterUserCommandOutput.of(savedUser.getId());
     }
 
     private User createUserEntityFromCommand(RegisterUserCommand command) {

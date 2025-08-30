@@ -7,7 +7,7 @@ Feature: User Registration
     Given I have an user registration form with cpf "530.916.230-50" and email "ratyas@mail.com"
     When I submit the registration form
     Then I should receive a response with status code 201
-    And I should see the new user id
+    And I should see the new user id and its name
     And the user with cpf "530.916.230-50" should be saved in the database with the correct details
 
   Scenario: Attempt to register an user with an existing email
