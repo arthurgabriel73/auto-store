@@ -70,7 +70,8 @@ public class RegisterUserUseCaseTest {
     void testShouldThrowExceptionWhenUserAlreadyExistsByEmail() {
         // Arrange
         userScoreService.setApproved(true);
-        RegisterUserCommand command = new RegisterUserCommand(
+        sut.execute(command);
+        RegisterUserCommand newCommand = new RegisterUserCommand(
                 "John",
                 "Doe",
                 "296.359.920-09",
@@ -84,17 +85,17 @@ public class RegisterUserUseCaseTest {
                 "Apt 1",
                 "Country"
         );
-        sut.execute(command);
 
         // Act & Assert
-        assertThrows(EmailAlreadyRegisteredException.class, () -> sut.execute(command));
+        assertThrows(EmailAlreadyRegisteredException.class, () -> sut.execute(newCommand));
     }
 
     @Test
     void testShouldThrowExceptionWhenUserAlreadyExistsByCpf() {
         // Arrange
         userScoreService.setApproved(true);
-        RegisterUserCommand command = new RegisterUserCommand(
+        sut.execute(command);
+        RegisterUserCommand newCommand = new RegisterUserCommand(
                 "John",
                 "Doe",
                 "047.797.980-78",
@@ -108,10 +109,9 @@ public class RegisterUserUseCaseTest {
                 "Apt 1",
                 "Country"
         );
-        sut.execute(command);
 
         // Act & Assert
-        assertThrows(CpfAlreadyRegisteredException.class, () -> sut.execute(command));
+        assertThrows(CpfAlreadyRegisteredException.class, () -> sut.execute(newCommand));
     }
 
 }

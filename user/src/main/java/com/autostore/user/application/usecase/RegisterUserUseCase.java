@@ -1,6 +1,8 @@
 package com.autostore.user.application.usecase;
 
 
+import com.autostore.user.application.exception.CpfAlreadyRegisteredException;
+import com.autostore.user.application.exception.EmailAlreadyRegisteredException;
 import com.autostore.user.application.port.driven.UserRepository;
 import com.autostore.user.application.port.driven.UserScoreService;
 import com.autostore.user.application.port.driver.RegisterUserDriverPort;
@@ -22,8 +24,27 @@ public class RegisterUserUseCase implements RegisterUserDriverPort {
     @Override
     public RegisterUserCommandOutput execute(RegisterUserCommand command) {
         User user = createUserEntityFromCommand(command);
+        requireCpfNotRegistered(user.getCpf());
+        requireEmailNotRegistered(user.getEmail());
+        requireUserApproved(user);
+        return saveUser(user);
+    }
+
+    private void requireCpfNotRegistered(Cpf cpf) {
+        if (userRepository.existsByCpf(cpf)) throw new CpfAlreadyRegisteredException(cpf.value());
+    }
+
+    private void requireEmailNotRegistered(Email email) {
+        if (userRepository.existsByEmail(email)) throw new EmailAlreadyRegisteredException(email.value());
+    }
+
+    private void requireUserApproved(User user) {
         if (!userScoreService.isApproved(user.getCpf())) throw new BusinessException("User not approved");
-        return new RegisterUserCommandOutput(userRepository.save(user).getId());
+    }
+
+    private RegisterUserCommandOutput saveUser(User user) {
+        User savedUser = userRepository.save(user);
+        return new RegisterUserCommandOutput(savedUser.getId());
     }
 
     private User createUserEntityFromCommand(RegisterUserCommand command) {
