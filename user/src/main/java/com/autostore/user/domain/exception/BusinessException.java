@@ -1,13 +1,9 @@
 package com.autostore.user.domain.exception;
 
 
-import lombok.Setter;
-
-
-@Setter
 public class BusinessException extends RuntimeException {
 
-    private String message;
+    private final String message;
 
     public BusinessException(String message) {
         super(message);

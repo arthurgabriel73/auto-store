@@ -54,7 +54,9 @@ tasks.named('test') {
 }
 
 def jacocoClassDirectories = files(sourceSets.main.output).asFileTree.matching {
-
+    exclude '**/UserApplication**'
+    exclude '**/config/**'
+    exclude '**/exception/**'
 }
 
 jacocoTestReport {
