@@ -31,7 +31,7 @@ Feature: User
     Given I have registered an user with cpf "119.557.420-73" and email "elpufo@mail.com"
     When I search for the user by cpf "119.557.420-73"
     Then I should receive a response with status code 200
-    And the response should contain the user id, name, cpf matching "119.557.420-73", email matching "elpufo@mail.com"
+    And the response should contain the user id, name, cpf matching "***.***.***-73", email matching "e***o@mail.com"
 
   Scenario: Attempt to find a non-existent user
     When I search for the user by cpf "877.245.980-88"

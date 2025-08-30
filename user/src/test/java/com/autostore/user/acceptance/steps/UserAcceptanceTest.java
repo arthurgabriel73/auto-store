@@ -5,7 +5,6 @@ import com.autostore.user.application.port.driven.UserRepository;
 import com.autostore.user.application.port.driver.model.command.RegisterUserCommandOutput;
 import com.autostore.user.application.port.driver.model.query.FindUserByCpfQueryOutput;
 import com.autostore.user.domain.Cpf;
-import com.autostore.user.domain.Email;
 import com.autostore.user.infrastructure.adapter.util.JsonUtil;
 import com.autostore.user.util.TestUserDataFactory;
 import io.cucumber.java.en.Given;
@@ -85,8 +84,8 @@ public class UserAcceptanceTest extends BaseScenario {
         assertNotNull(output);
         assertNotNull(output.getId());
         assertNotNull(output.getName());
-        assertEquals(Cpf.of(cpf).value(), output.getCpf());
-        assertEquals(Email.of(email).value(), output.getEmail());
+        assertEquals(cpf, output.getCpf());
+        assertEquals(email, output.getEmail());
     }
 
 }
