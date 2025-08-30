@@ -4,7 +4,17 @@ package com.autostore.user.domain;
 import java.util.UUID;
 
 
-public record UserId(UUID id) {
+public class UserId {
+
+    private final UUID id;
+
+    private UserId(UUID id) {
+        this.id = id;
+    }
+
+    public static UserId generateNew() {
+        return new UserId(UUID.randomUUID());
+    }
 
     public String string() {
         return id.toString();

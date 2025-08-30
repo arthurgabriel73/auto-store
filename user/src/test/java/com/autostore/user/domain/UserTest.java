@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static java.util.UUID.randomUUID;
-
 
 public class UserTest {
 
-    private static final UserId userId = new UserId(randomUUID());
+    private static final UserId userId = UserId.generateNew();
     private static final FullName fullName = FullName.of("John", "Doe");
     private static final Cpf cpf = Cpf.of("380.229.590-06");
     private static final Email email = Email.of("johndoe123@mail.com");
