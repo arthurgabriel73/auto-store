@@ -3,6 +3,7 @@ package com.autostore.user.infrastructure.adapter.driven.persistence;
 
 import com.autostore.user.application.port.driven.UserRepository;
 import com.autostore.user.domain.Cpf;
+import com.autostore.user.domain.Email;
 import com.autostore.user.domain.User;
 import com.autostore.user.domain.UserId;
 
@@ -27,6 +28,18 @@ public class InMemoryUserRepository implements UserRepository {
                 .filter(user -> user.getCpf().equals(cpf))
                 .findFirst()
                 .map(this::toNewInstance);
+    }
+
+    @Override
+    public Boolean existsByCpf(Cpf cpf) {
+        return users.stream()
+                .anyMatch(user -> user.getCpf().equals(cpf));
+    }
+
+    @Override
+    public Boolean existsByEmail(Email email) {
+        return users.stream()
+                .anyMatch(user -> user.getEmail().equals(email));
     }
 
     private User toNewInstance(User user) {

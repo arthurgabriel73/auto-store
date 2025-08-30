@@ -3,6 +3,7 @@ package com.autostore.user.infrastructure.adapter.driven.persistence;
 
 import com.autostore.user.application.port.driven.UserRepository;
 import com.autostore.user.domain.Cpf;
+import com.autostore.user.domain.Email;
 import com.autostore.user.domain.User;
 import com.autostore.user.infrastructure.adapter.driven.persistence.entity.UserDatabaseEntity;
 import com.autostore.user.infrastructure.adapter.driven.persistence.repository.JpaUserRepository;
@@ -28,6 +29,16 @@ public class UserRepositoryAdapter implements UserRepository {
         var entity = repository.findByCpf(cpf.value());
         if (entity.isEmpty()) return Optional.empty();
         return entity.map(UserDatabaseEntity::toDomain);
+    }
+
+    @Override
+    public Boolean existsByCpf(Cpf cpf) {
+        return repository.existsByCpf(cpf.value());
+    }
+
+    @Override
+    public Boolean existsByEmail(Email email) {
+        return repository.existsByEmail(email.value());
     }
 
 }

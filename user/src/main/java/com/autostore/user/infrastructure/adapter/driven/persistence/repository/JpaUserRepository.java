@@ -12,4 +12,8 @@ public interface JpaUserRepository extends JpaRepository<UserDatabaseEntity, UUI
 
     Optional<UserDatabaseEntity> findByCpf(String value);
 
+    Boolean existsByCpf(String value);
+
+    Boolean existsByEmail(String value);
+
 }
