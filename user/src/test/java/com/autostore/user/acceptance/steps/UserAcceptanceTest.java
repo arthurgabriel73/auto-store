@@ -73,13 +73,8 @@ public class UserAcceptanceTest extends BaseScenario {
 
     @Then("I should see the new user id and its name")
     public void i_should_see_the_new_user_id_and_its_name() {
-        var response = cucumberContextHolder.getResponse();
-        assertNotNull(response);
-        var body = response.getBody();
-        assertNotNull(body);
-
+        var body = cucumberContextHolder.getResponse().getBody();
         RegisterUserCommandOutput output = jsonUtil.fromJson(body, RegisterUserCommandOutput.class);
-
         assertNotNull(output.userId());
         assertDoesNotThrow(() -> UUID.fromString(output.userId()));
     }
