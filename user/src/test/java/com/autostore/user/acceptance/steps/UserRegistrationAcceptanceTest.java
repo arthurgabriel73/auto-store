@@ -24,14 +24,14 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
     @Autowired
     private UserRepository userRepository;
 
-    @Given("I have a valid user registration form")
-    public void i_have_a_valid_user_registration_form() {
+    @Given("I have an user registration form with cpf {string} and email {string}")
+    public void i_have_an_user_registration_form(String cpf, String email) {
         cucumberContextHolder.setRequestData(
                 Map.ofEntries(
                         Map.entry("firstName", "John"),
                         Map.entry("lastName", "Doe"),
-                        Map.entry("cpf", "047.797.980-78"),
-                        Map.entry("email", "john@mail.com"),
+                        Map.entry("cpf", cpf),
+                        Map.entry("email", email),
                         Map.entry("street", "Main St"),
                         Map.entry("number", "123"),
                         Map.entry("neighborhood", "Downtown"),
@@ -44,12 +44,12 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
         );
     }
 
-    @Given("I have registered a user with email {string}")
-    public void i_have_registered_a_user_with_email(String email) {
+    @Given("I have registered an user with cpf {string} and email {string}")
+    public void i_have_registered_a_user_with_cpf_and_email(String cpf, String email) {
         var requestData = Map.ofEntries(
                 Map.entry("firstName", "John"),
                 Map.entry("lastName", "Doe"),
-                Map.entry("cpf", "047.797.980-78"),
+                Map.entry("cpf", cpf),
                 Map.entry("email", email),
                 Map.entry("street", "Main St"),
                 Map.entry("number", "123"),
@@ -65,66 +65,6 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
                 requestData,
                 String.class
         );
-    }
-
-    @Given("I have registered a user with cpf {string}")
-    public void i_have_registered_a_user_with_cpf(String cpf) {
-        var requestData = Map.ofEntries(
-                Map.entry("firstName", "John"),
-                Map.entry("lastName", "Doe"),
-                Map.entry("cpf", cpf),
-                Map.entry("email", "john321@mail.com"),
-                Map.entry("street", "Main St"),
-                Map.entry("number", "123"),
-                Map.entry("neighborhood", "Downtown"),
-                Map.entry("city", "Metropolis"),
-                Map.entry("state", "State"),
-                Map.entry("zipCode", "12345"),
-                Map.entry("complement", "Apt 1"),
-                Map.entry("country", "Country")
-        );
-        testRestTemplate.postForEntity(
-                BASE_URL + USERS_URI,
-                requestData,
-                String.class
-        );
-    }
-
-
-    @Given("I have a user registration form with email {string}")
-    public void i_have_a_user_registration_form_with_email(String email) {
-        cucumberContextHolder.setRequestData(Map.ofEntries(
-                Map.entry("firstName", "John"),
-                Map.entry("lastName", "Doe"),
-                Map.entry("cpf", "047.797.980-78"),
-                Map.entry("email", email),
-                Map.entry("street", "Main St"),
-                Map.entry("number", "123"),
-                Map.entry("neighborhood", "Downtown"),
-                Map.entry("city", "Metropolis"),
-                Map.entry("state", "State"),
-                Map.entry("zipCode", "12345"),
-                Map.entry("complement", "Apt 1"),
-                Map.entry("country", "Country")
-        ));
-    }
-
-    @Given("I have a user registration form with cpf {string}")
-    public void i_have_a_user_registration_form_with_cpf(String cpf) {
-        cucumberContextHolder.setRequestData(Map.ofEntries(
-                Map.entry("firstName", "John"),
-                Map.entry("lastName", "Doe"),
-                Map.entry("cpf", cpf),
-                Map.entry("email", "john@mail.com"),
-                Map.entry("street", "Main St"),
-                Map.entry("number", "123"),
-                Map.entry("neighborhood", "Downtown"),
-                Map.entry("city", "Metropolis"),
-                Map.entry("state", "State"),
-                Map.entry("zipCode", "12345"),
-                Map.entry("complement", "Apt 1"),
-                Map.entry("country", "Country")
-        ));
     }
 
 
@@ -155,23 +95,23 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
         assertNotNull(userId);
     }
 
-    @And("the user should be saved in the database with the correct details")
-    public void the_user_should_be_saved_in_the_database_with_correct_details() {
+    @And("the user with cpf {string} should be saved in the database with the correct details")
+    public void the_user_should_be_saved_in_the_database_with_correct_details(String cpf) {
         var response = cucumberContextHolder.getResponse();
         assertNotNull(response);
 
-        var user = userRepository.findByCpf(Cpf.of("047.797.980-78")).orElse(null);
+        var user = userRepository.findByCpf(Cpf.of(cpf)).orElse(null);
         assertNotNull(user);
         assertNotNull(user.getCpf());
         assertNotNull(user.getEmail());
     }
 
-    @Then("I should find the user with the correct details")
-    public void i_should_find_the_user_with_the_correct_details() {
+    @Then("I should find the user by cpf {string} with the correct details")
+    public void i_should_find_the_user_with_the_correct_details(String cpf) {
         var response = cucumberContextHolder.getResponse();
         assertNotNull(response);
 
-        var user = userRepository.findByCpf(Cpf.of("530.916.230-50")).orElse(null);
+        var user = userRepository.findByCpf(Cpf.of(cpf)).orElse(null);
         assertNotNull(user);
         assertNotNull(user.getCpf());
         assertNotNull(user.getEmail());
