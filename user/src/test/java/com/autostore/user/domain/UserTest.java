@@ -12,9 +12,9 @@ public class UserTest {
 
     private static final UserId userId = new UserId(randomUUID());
     private static final FullName fullName = FullName.of("John", "Doe");
-    private static final Cpf cpf = new Cpf("380.229.590-06");
-    private static final Email email = new Email("johndoe123@mail.com");
-    private static final Address address = new Address(
+    private static final Cpf cpf = Cpf.of("380.229.590-06");
+    private static final Email email = Email.of("johndoe123@mail.com");
+    private static final Address address = Address.of(
             1L,
             "Main St",
             "123",

@@ -4,11 +4,21 @@ package com.autostore.user.domain;
 import com.autostore.user.domain.exception.ValidationException;
 
 
-public record Cpf(String value) {
+public class Cpf {
 
-    public Cpf(String value) {
+    private final String value;
+
+    private Cpf(String value) {
         if (!validate(value)) throw new ValidationException("CPF inválido");
         this.value = clean(value);
+    }
+
+    public static Cpf of(String value) {
+        return new Cpf(value);
+    }
+
+    public String value() {
+        return value;
     }
 
     private boolean validate(String cpf) {
