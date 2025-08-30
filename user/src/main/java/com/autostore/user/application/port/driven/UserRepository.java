@@ -13,4 +13,8 @@ public interface UserRepository {
 
     Optional<User> findByCpf(Cpf cpf);
 
+    Boolean existsByCpf(Cpf cpf);
+
+    Boolean existsByEmail(String email);
+
 }
