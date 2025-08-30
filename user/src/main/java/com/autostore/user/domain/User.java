@@ -21,6 +21,6 @@ public class User {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     private final Address address;
-    private UserId id;
+    private final UserId id;
 
 }

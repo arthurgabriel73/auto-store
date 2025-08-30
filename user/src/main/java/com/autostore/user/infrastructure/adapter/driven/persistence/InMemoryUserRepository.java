@@ -8,6 +8,7 @@ import com.autostore.user.domain.UserId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class InMemoryUserRepository implements UserRepository {
@@ -21,12 +22,11 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public User findByCpf(Cpf cpf) {
+    public Optional<User> findByCpf(Cpf cpf) {
         return users.stream()
                 .filter(user -> user.getCpf().equals(cpf))
                 .findFirst()
-                .map(this::toNewInstance)
-                .orElse(null);
+                .map(this::toNewInstance);
     }
 
     private User toNewInstance(User user) {
