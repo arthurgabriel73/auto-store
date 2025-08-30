@@ -1,18 +1,14 @@
 package com.autostore.user.domain;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Getter
 @Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class User {
 
     private final FullName fullName;
