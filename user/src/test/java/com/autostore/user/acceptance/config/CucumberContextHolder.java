@@ -13,7 +13,7 @@ public class CucumberContextHolder {
     private ResponseEntity<String> response;
     private Map<String, Object> requestData;
 
-    public Object getRequestData() {
+    public Map<String, Object> getRequestData() {
         return requestData;
     }
 

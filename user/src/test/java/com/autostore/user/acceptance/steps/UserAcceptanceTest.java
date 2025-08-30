@@ -3,7 +3,9 @@ package com.autostore.user.acceptance.steps;
 
 import com.autostore.user.application.port.driven.UserRepository;
 import com.autostore.user.application.port.driver.model.command.RegisterUserCommandOutput;
+import com.autostore.user.application.port.driver.model.query.FindUserByCpfQueryOutput;
 import com.autostore.user.domain.Cpf;
+import com.autostore.user.domain.Email;
 import com.autostore.user.infrastructure.adapter.util.JsonUtil;
 import com.autostore.user.util.TestUserDataFactory;
 import io.cucumber.java.en.Given;
@@ -15,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @Transactional
@@ -43,60 +44,49 @@ public class UserAcceptanceTest extends BaseScenario {
     @Given("I have registered an user with cpf {string} and email {string}")
     public void i_have_registered_a_user_with_cpf_and_email(String cpf, String email) {
         Map<String, Object> requestData = testUserDataFactory.createUserRegistrationData(cpf, email);
-        testRestTemplate.postForEntity(
-                BASE_URL + USERS_URI,
-                requestData,
-                String.class
-        );
+        var response = testRestTemplate.postForEntity(BASE_URL + USERS_URI, requestData, String.class);
+        if (!response.getStatusCode().is2xxSuccessful())
+            throw new AssertionError("Unexpected response code: " + response.getStatusCode());
     }
 
     @When("I submit the registration form")
     public void i_submit_the_registration_form() {
-        var response = testRestTemplate.postForEntity(
-                BASE_URL + USERS_URI,
-                cucumberContextHolder.getRequestData(),
-                String.class
-        );
+        Map<String, Object> requestData = cucumberContextHolder.getRequestData();
+        var response = testRestTemplate.postForEntity(BASE_URL + USERS_URI, requestData, String.class);
         cucumberContextHolder.setResponse(response);
     }
 
     @When("I search for the user by cpf {string}")
     public void i_search_for_the_user_by_cpf(String cpf) {
-        var response = testRestTemplate.getForEntity(
-                BASE_URL + USERS_URI + "/cpf/" + cpf,
-                String.class
-        );
+        var response = testRestTemplate.getForEntity(BASE_URL + USERS_URI + "/cpf/" + cpf, String.class);
         cucumberContextHolder.setResponse(response);
-    }
-
-    @Then("I should see the new user id and its name")
-    public void i_should_see_the_new_user_id_and_its_name() {
-        var body = cucumberContextHolder.getResponse().getBody();
-        RegisterUserCommandOutput output = jsonUtil.fromJson(body, RegisterUserCommandOutput.class);
-        assertNotNull(output.userId());
-        assertDoesNotThrow(() -> UUID.fromString(output.userId()));
-    }
-    
-    @Then("I should find the user by cpf {string} with the correct details")
-    public void i_should_find_the_user_with_the_correct_details(String cpf) {
-        var response = cucumberContextHolder.getResponse();
-        assertNotNull(response);
-
-        var user = userRepository.findByCpf(Cpf.of(cpf)).orElse(null);
-        assertNotNull(user);
-        assertNotNull(user.getCpf());
-        assertNotNull(user.getEmail());
     }
 
     @Then("the user with cpf {string} should be saved in the database with the correct details")
     public void the_user_should_be_saved_in_the_database_with_correct_details(String cpf) {
-        var response = cucumberContextHolder.getResponse();
-        assertNotNull(response);
-
         var user = userRepository.findByCpf(Cpf.of(cpf)).orElse(null);
         assertNotNull(user);
         assertNotNull(user.getCpf());
         assertNotNull(user.getEmail());
+    }
+
+    @Then("the response should contain the generated user id")
+    public void the_response_should_contain_the_generated_user_id() {
+        var responseBody = cucumberContextHolder.getResponse().getBody();
+        RegisterUserCommandOutput output = jsonUtil.fromJson(responseBody, RegisterUserCommandOutput.class);
+        assertNotNull(output.getUserId());
+        assertDoesNotThrow(() -> UUID.fromString(output.getUserId()));
+    }
+
+    @Then("the response should contain the user id, name, cpf matching {string}, email matching {string}")
+    public void the_response_should_contain_the_user_id_name_cpf_email(String cpf, String email) {
+        var responseBody = cucumberContextHolder.getResponse().getBody();
+        FindUserByCpfQueryOutput output = jsonUtil.fromJson(responseBody, FindUserByCpfQueryOutput.class);
+        assertNotNull(output);
+        assertNotNull(output.getId());
+        assertNotNull(output.getName());
+        assertEquals(Cpf.of(cpf).value(), output.getCpf());
+        assertEquals(Email.of(email).value(), output.getEmail());
     }
 
 }

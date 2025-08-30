@@ -20,8 +20,7 @@ public class FindUserByCpfUseCase implements FindUserByCpfDriverPort {
         Cpf userCpf = Cpf.of(query.cpf());
         var userFound = userRepository.findByCpf(userCpf);
         if (userFound.isEmpty()) throw new UserNotFoundException("User with CPF " + query.cpf() + " not found");
-        var user = userFound.get();
-        return new FindUserByCpfQueryOutput(user);
+        return new FindUserByCpfQueryOutput(userFound.get());
     }
 
 }

@@ -7,7 +7,7 @@ Feature: User
     Given I have an user registration form with cpf "530.916.230-50" and email "ratyas@mail.com"
     When I submit the registration form
     Then I should receive a response with status code 201
-    And I should see the new user id and its name
+    And the response should contain the generated user id
     And the user with cpf "530.916.230-50" should be saved in the database with the correct details
 
   Scenario: Attempt to register an user with an existing email
@@ -23,8 +23,7 @@ Feature: User
     Then I should receive a response with status code 409
 
   Scenario: Attempt to register an user with invalid email format
-    Given I have registered an user with cpf "393.775.940-90" and email "invalid-email"
-    And I have an user registration form with cpf "393.775.940-90" and email "invalid-email"
+    Given I have an user registration form with cpf "393.775.940-90" and email "invalid-email"
     When I submit the registration form
     Then I should receive a response with status code 400
 
@@ -32,7 +31,7 @@ Feature: User
     Given I have registered an user with cpf "119.557.420-73" and email "elpufo@mail.com"
     When I search for the user by cpf "119.557.420-73"
     Then I should receive a response with status code 200
-    And I should find the user by cpf "119.557.420-73" with the correct details
+    And the response should contain the user id, name, cpf matching "119.557.420-73", email matching "elpufo@mail.com"
 
   Scenario: Attempt to find a non-existent user
     When I search for the user by cpf "877.245.980-88"
