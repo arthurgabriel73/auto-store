@@ -3,10 +3,13 @@ Feature: User Registration
   I want to register new users
   So that they can use the system
 
+  # TODO: Add unique fields in the scenarios below
+
   Scenario: Successfully register a new user
     Given I have a valid user registration form
     When I submit the registration form
-    Then I should see the new user id
+    Then I should receive a response with status code 201
+    And I should see the new user id
     And the user should be saved in the database with the correct details
 
   Scenario: Attempt to register a user with an existing email
@@ -21,7 +24,6 @@ Feature: User Registration
     When I submit the registration form
     Then I should receive a response with status code 409
 
-
   Scenario: Attempt to register a user with invalid email format
     Given I have a user registration form with email "invalid-email"
     When I submit the registration form
@@ -30,4 +32,5 @@ Feature: User Registration
   Scenario: Attempt to find a user after registration
     Given I have registered a user with cpf "530.916.230-50"
     When I search for the user by cpf "530.916.230-50"
-    Then I should find the user with the correct details
+    Then I should receive a response with status code 200
+    And I should find the user with the correct details

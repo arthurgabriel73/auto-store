@@ -73,7 +73,7 @@ public class UserRegistrationAcceptanceTest extends BaseScenario {
                 Map.entry("firstName", "John"),
                 Map.entry("lastName", "Doe"),
                 Map.entry("cpf", cpf),
-                Map.entry("email", "john@mail.com"),
+                Map.entry("email", "john321@mail.com"),
                 Map.entry("street", "Main St"),
                 Map.entry("number", "123"),
                 Map.entry("neighborhood", "Downtown"),

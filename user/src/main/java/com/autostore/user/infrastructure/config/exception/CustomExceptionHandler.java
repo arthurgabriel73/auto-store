@@ -4,6 +4,7 @@ package com.autostore.user.infrastructure.config.exception;
 import com.autostore.user.application.exception.ApplicationException;
 import com.autostore.user.application.exception.CpfAlreadyRegisteredException;
 import com.autostore.user.application.exception.EmailAlreadyRegisteredException;
+import com.autostore.user.application.exception.UserNotFoundException;
 import com.autostore.user.domain.exception.BusinessException;
 import com.autostore.user.domain.exception.ValidationException;
 import org.springframework.http.HttpHeaders;
@@ -43,6 +44,12 @@ public class CustomExceptionHandler {
     @ExceptionHandler(CpfAlreadyRegisteredException.class)
     public ResponseEntity<Object> handleCpfAlreadyRegisteredException(CpfAlreadyRegisteredException ex) {
         final ErrorMessage errorMessage = new ErrorMessage(HttpStatus.CONFLICT, ex.getMessage());
+        return new ResponseEntity<>(errorMessage, new HttpHeaders(), errorMessage.getStatus());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
+        final ErrorMessage errorMessage = new ErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
         return new ResponseEntity<>(errorMessage, new HttpHeaders(), errorMessage.getStatus());
     }
 
