@@ -2,13 +2,24 @@ package com.autostore.user.domain;
 
 
 import com.autostore.user.domain.exception.ValidationException;
+import lombok.Getter;
 
 
-public record FullName(String firstName, String lastName) {
+@Getter
+public class FullName {
 
-    public FullName {
+    private final String firstName;
+    private final String lastName;
+
+    private FullName(String firstName, String lastName) {
         validateFirstName(firstName);
         validateLastName(lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public static FullName of(String firstName, String lastName) {
+        return new FullName(firstName, lastName);
     }
 
     private void validateFirstName(String firstName) {

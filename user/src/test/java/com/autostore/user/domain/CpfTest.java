@@ -22,9 +22,9 @@ public class CpfTest {
     })
     void testShouldCreateValidCpf(String cpfValue) {
         // Act & Assert
-        assertDoesNotThrow(() -> new Cpf(cpfValue));
+        assertDoesNotThrow(() -> Cpf.of(cpfValue));
 
-        Cpf cpf = new Cpf(cpfValue);
+        Cpf cpf = Cpf.of(cpfValue);
         assertNotNull(cpf);
         assertEquals(cpfValue.replaceAll("\\D", ""), cpf.value());
     }
@@ -41,6 +41,7 @@ public class CpfTest {
     @NullAndEmptySource
     void testShouldThrowExceptionForInvalidCpf(String cpfValue) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new Cpf(cpfValue));
+        assertThrows(ValidationException.class, () -> Cpf.of(cpfValue));
     }
+
 }

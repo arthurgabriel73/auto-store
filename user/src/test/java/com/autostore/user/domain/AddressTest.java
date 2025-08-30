@@ -57,15 +57,15 @@ public class AddressTest {
         // Act & Assert
         assertThrows(ValidationException.class, () -> {
             switch (fieldName) {
-                case "street" -> new Address(VALID_ID, invalidValue, VALID_NUMBER, VALID_NEIGHBORHOOD,
+                case "street" -> Address.of(VALID_ID, invalidValue, VALID_NUMBER, VALID_NEIGHBORHOOD,
                         VALID_CITY, VALID_STATE, VALID_ZIP_CODE, VALID_COMPLEMENT, VALID_COUNTRY);
-                case "number" -> new Address(VALID_ID, VALID_STREET, invalidValue, VALID_NEIGHBORHOOD,
+                case "number" -> Address.of(VALID_ID, VALID_STREET, invalidValue, VALID_NEIGHBORHOOD,
                         VALID_CITY, VALID_STATE, VALID_ZIP_CODE, VALID_COMPLEMENT, VALID_COUNTRY);
-                case "city" -> new Address(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
+                case "city" -> Address.of(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
                         invalidValue, VALID_STATE, VALID_ZIP_CODE, VALID_COMPLEMENT, VALID_COUNTRY);
-                case "state" -> new Address(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
+                case "state" -> Address.of(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
                         VALID_CITY, invalidValue, VALID_ZIP_CODE, VALID_COMPLEMENT, VALID_COUNTRY);
-                case "country" -> new Address(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
+                case "country" -> Address.of(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
                         VALID_CITY, VALID_STATE, VALID_ZIP_CODE, VALID_COMPLEMENT, invalidValue);
             }
         });
@@ -83,8 +83,7 @@ public class AddressTest {
     @Test
     void testShouldCreateAddressWithNullId() {
         // Act & Assert
-        Address address = new Address(
-                null,
+        Address address = Address.create(
                 VALID_STREET,
                 VALID_NUMBER,
                 VALID_NEIGHBORHOOD,
@@ -97,27 +96,27 @@ public class AddressTest {
 
         // Assert
         assertNotNull(address);
-        assertNull(address.id());
+        assertNull(address.getId());
     }
 
 
     private Address createValidAddress() {
-        return new Address(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
+        return Address.of(VALID_ID, VALID_STREET, VALID_NUMBER, VALID_NEIGHBORHOOD,
                 VALID_CITY, VALID_STATE, VALID_ZIP_CODE, VALID_COMPLEMENT, VALID_COUNTRY);
     }
 
     private void assertValidAddress(Address address) {
         assertAll("Valid address assertions",
                 () -> assertNotNull(address),
-                () -> assertEquals(VALID_ID, address.id()),
-                () -> assertEquals(VALID_STREET, address.street()),
-                () -> assertEquals(VALID_NUMBER, address.number()),
-                () -> assertEquals(VALID_NEIGHBORHOOD, address.neighborhood()),
-                () -> assertEquals(VALID_CITY, address.city()),
-                () -> assertEquals(VALID_STATE, address.state()),
-                () -> assertEquals(VALID_ZIP_CODE, address.zipCode()),
-                () -> assertEquals(VALID_COMPLEMENT, address.complement()),
-                () -> assertEquals(VALID_COUNTRY, address.country())
+                () -> assertEquals(VALID_ID, address.getId()),
+                () -> assertEquals(VALID_STREET, address.getStreet()),
+                () -> assertEquals(VALID_NUMBER, address.getNumber()),
+                () -> assertEquals(VALID_NEIGHBORHOOD, address.getNeighborhood()),
+                () -> assertEquals(VALID_CITY, address.getCity()),
+                () -> assertEquals(VALID_STATE, address.getState()),
+                () -> assertEquals(VALID_ZIP_CODE, address.getZipCode()),
+                () -> assertEquals(VALID_COMPLEMENT, address.getComplement()),
+                () -> assertEquals(VALID_COUNTRY, address.getCountry())
         );
     }
 

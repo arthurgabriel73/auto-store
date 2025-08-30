@@ -7,10 +7,12 @@ import java.time.LocalDateTime;
 
 
 public class UserTest {
-    private static final FullName fullName = new FullName("John", "Doe");
-    private static final Cpf cpf = new Cpf("380.229.590-06");
-    private static final Email email = new Email("johndoe123@mail.com");
-    private static final Address address = new Address(
+
+    private static final UserId userId = UserId.generateNew();
+    private static final FullName fullName = FullName.of("John", "Doe");
+    private static final Cpf cpf = Cpf.of("380.229.590-06");
+    private static final Email email = Email.of("johndoe123@mail.com");
+    private static final Address address = Address.of(
             1L,
             "Main St",
             "123",
@@ -27,7 +29,7 @@ public class UserTest {
         // Arrange & Act
         var now = LocalDateTime.now();
         User user = User.builder()
-                .id(1L)
+                .id(userId)
                 .fullName(fullName)
                 .cpf(cpf)
                 .email(email)
@@ -37,7 +39,7 @@ public class UserTest {
                 .build();
 
         // Assert
-        assert user.getId().equals(1L);
+        assert user.getId().equals(userId);
         assert user.getFullName().equals(fullName);
         assert user.getCpf().equals(cpf);
         assert user.getEmail().equals(email);
@@ -68,4 +70,5 @@ public class UserTest {
         assert user.getCreatedAt().equals(now);
         assert user.getUpdatedAt().equals(now);
     }
+
 }

@@ -21,9 +21,9 @@ public class EmailTest {
     })
     void testShouldCreateValidEmail(String emailValue) {
         // Act & Assert
-        assertDoesNotThrow(() -> new Email(emailValue));
+        assertDoesNotThrow(() -> Email.of(emailValue));
 
-        Email email = new Email(emailValue);
+        Email email = Email.of(emailValue);
         assertNotNull(email);
         assertEquals(emailValue, email.value());
     }
@@ -42,6 +42,7 @@ public class EmailTest {
     @NullAndEmptySource
     void testShouldThrowExceptionForInvalidEmail(String invalidEmail) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new Email(invalidEmail));
+        assertThrows(ValidationException.class, () -> Email.of(invalidEmail));
     }
+
 }

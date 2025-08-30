@@ -24,7 +24,7 @@ public class FullNameTest {
     })
     void testFullNames(String firstName, String lastName, String expectedFullName) {
         // Arrange
-        FullName fullName = new FullName(firstName, lastName);
+        FullName fullName = FullName.of(firstName, lastName);
 
         // Act
         String actualFullName = fullName.completeName();
@@ -38,7 +38,7 @@ public class FullNameTest {
     @ValueSource(strings = {" ", "  ", "\t", "\n", "A", "a", "1", TOO_LONG_NAME})
     void testShouldThrowExceptionWhenFirstNameIsInvalid(String invalidFirstName) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new FullName(invalidFirstName, "Doe"));
+        assertThrows(ValidationException.class, () -> FullName.of(invalidFirstName, "Doe"));
     }
 
     @ParameterizedTest
@@ -46,21 +46,21 @@ public class FullNameTest {
     @ValueSource(strings = {" ", "  ", "\t", "\n", "A", "a", "1", TOO_LONG_NAME})
     void testShouldThrowExceptionWhenLastNameIsInvalid(String invalidLastName) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new FullName("John", invalidLastName));
+        assertThrows(ValidationException.class, () -> FullName.of("John", invalidLastName));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"John123", "Maria@", "João#Silva"})
     void testShouldThrowExceptionWhenFirstNameContainsSpecialCharacters(String invalidFirstName) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new FullName(invalidFirstName, "Doe"));
+        assertThrows(ValidationException.class, () -> FullName.of(invalidFirstName, "Doe"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"John123", "Maria@", "João#Silva"})
     void testShouldThrowExceptionWhenLastNameContainsSpecialCharacters(String invalidLastName) {
         // Act & Assert
-        assertThrows(ValidationException.class, () -> new FullName("John", invalidLastName));
+        assertThrows(ValidationException.class, () -> FullName.of("John", invalidLastName));
     }
 
 }
