@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "addresses")
+@Table(name = "address")
 public class AddressDatabaseEntity {
 
     @Id

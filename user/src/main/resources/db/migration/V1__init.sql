@@ -13,7 +13,7 @@ CREATE TABLE address
 
 CREATE TABLE users
 (
-    id         SERIAL PRIMARY KEY,
+    id         UUID PRIMARY KEY,
     full_name  VARCHAR(255)             NOT NULL,
     cpf        VARCHAR(14)              NOT NULL UNIQUE,
     email      VARCHAR(255)             NOT NULL UNIQUE,
