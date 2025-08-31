@@ -4,7 +4,8 @@ test:
 	@echo "\033[0;36mRunning all tests...\033[0m"
 	#(cd user && ./gradlew clean test)
 	#(cd inventory && ./gradlew clean test)
-	(cd validation && ./gradlew clean test)
+	#(cd validation && ./gradlew clean test)
+	(cd payment && ./gradlew clean test)
 	@echo "\033[0;32mAll tests completed successfully!\033[0m"
 
 ci-test-suite:
