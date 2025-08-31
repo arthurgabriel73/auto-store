@@ -9,19 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterProductCommandOutput {
 
-    private String productId;
+    private Long productId;
     private String productCode;
     private Double unitValue;
     private String category;
 
-    private RegisterProductCommandOutput(String productId, String productCode, Double unitValue, String category) {
+    private RegisterProductCommandOutput(Long productId, String productCode, Double unitValue, String category) {
         this.productId = productId;
         this.productCode = productCode;
         this.unitValue = unitValue;
         this.category = category;
     }
 
-    public static RegisterProductCommandOutput of(String productId, String productCode, Double unitValue, String category) {
+    public static RegisterProductCommandOutput of(Long productId, String productCode, Double unitValue, String category) {
         return new RegisterProductCommandOutput(productId, productCode, unitValue, category);
     }
 

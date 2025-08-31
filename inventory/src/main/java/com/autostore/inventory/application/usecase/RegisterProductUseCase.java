@@ -40,7 +40,7 @@ public class RegisterProductUseCase implements RegisterProductDriverPort {
     private RegisterProductCommandOutput saveProduct(Product product) {
         Product savedProduct = productRepository.save(product);
         return RegisterProductCommandOutput.of(
-                savedProduct.getId().toString(),
+                savedProduct.getId(),
                 savedProduct.getCode(),
                 savedProduct.getUnitValue(),
                 savedProduct.getCategory().name()
