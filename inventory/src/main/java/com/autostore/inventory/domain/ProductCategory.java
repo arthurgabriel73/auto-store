@@ -2,12 +2,21 @@ package com.autostore.inventory.domain;
 
 
 import com.autostore.inventory.domain.exception.ValidationException;
+import lombok.Getter;
 
 
+@Getter
 public enum ProductCategory {
-    VEHICLE,
-    PARTS,
-    ACCESSORIES;
+    VEHICLE("vehicle"),
+    PARTS("parts"),
+    ACCESSORIES("accessories"),
+    ;
+
+    private final String value;
+
+    ProductCategory(String value) {
+        this.value = value;
+    }
 
     public static void validateValue(String value) {
         try {
