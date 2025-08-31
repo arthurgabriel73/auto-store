@@ -1,6 +1,10 @@
 package com.autostore.validation.domain;
 
 
-public record ValidationProduct(String code, double unitValue) {
+import lombok.Builder;
+
+
+@Builder
+public record ValidationProduct(Long id, String code) {
 
 }
