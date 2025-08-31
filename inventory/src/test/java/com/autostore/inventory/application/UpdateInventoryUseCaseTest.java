@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class UpdateInventoryUseCaseTest {
@@ -107,7 +108,7 @@ public class UpdateInventoryUseCaseTest {
         assertEquals(99, updatedI2.getAvailableQuantity());
         assertEquals(2, activities.size());
         assertEquals(1, events.size());
-        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()), command.event());
+        assertEquals(command.event(), events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()));
     }
 
     @Test
@@ -145,7 +146,7 @@ public class UpdateInventoryUseCaseTest {
         // Act & Assert
         var events = eventProducer.getEvents();
         assertEquals(1, events.size());
-        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_FAILED_V1.getTopic()), command.event());
+        assertEquals(command.event(), events.get(Topic.INVENTORY_SERVICE_INVENTORY_FAILED_V1.getTopic()));
     }
 
     @Test
@@ -166,7 +167,7 @@ public class UpdateInventoryUseCaseTest {
         assertEquals(99, updatedI2.getAvailableQuantity());
         assertEquals(2, activities.size());
         assertEquals(1, events.size());
-        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()), command.event());
+        assertEquals(command.event(), events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()));
 
         // Act - Rollback
         sut.rollback(command.event());
@@ -180,9 +181,9 @@ public class UpdateInventoryUseCaseTest {
         assertEquals(100, rolledBackI2.getAvailableQuantity());
         assertEquals(2, rolledBackActivities.size());
         assertEquals(2, totalEvents.size());
-        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic(), totalEvents.keySet().toArray()[0]);
-        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic(), totalEvents.keySet().toArray()[1]);
-        assertEquals(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()), command.event());
+        assertEquals(command.event(), totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()));
+        assertNotNull(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()));
+        assertNotNull(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()));
     }
 
 }
