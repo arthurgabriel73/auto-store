@@ -2,8 +2,6 @@ package com.autostore.inventory.application;
 
 
 import com.autostore.inventory.application.exception.ApplicationException;
-import com.autostore.inventory.application.port.driven.InventoryRepository;
-import com.autostore.inventory.application.port.driven.ProductRepository;
 import com.autostore.inventory.application.port.driver.model.command.AddProductStockCommand;
 import com.autostore.inventory.application.usecase.AddProductStockUseCase;
 import com.autostore.inventory.domain.Inventory;
@@ -19,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AddProductStockUseCaseTest {
 
-    private ProductRepository productRepository;
-    private InventoryRepository inventoryRepository;
+    private InMemoryProductRepository productRepository;
+    private InMemoryInventoryRepository inventoryRepository;
     private AddProductStockUseCase sut;
 
     @BeforeEach
