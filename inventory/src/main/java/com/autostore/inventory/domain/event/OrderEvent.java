@@ -1,13 +1,17 @@
 package com.autostore.inventory.domain.event;
 
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 
-@Builder
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderEvent extends DomainEvent<Order> {
 
-    protected final String orderId;
-    protected final String transactionId;
+    protected String orderId;
+    protected String transactionId;
 
 }

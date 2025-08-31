@@ -3,6 +3,7 @@ package com.autostore.inventory.domain.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -11,10 +12,11 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DomainEvent<T> {
 
-    protected final String id;
-    protected final T payload;
-    protected final LocalDateTime createdAt;
+    protected String id;
+    protected T payload;
+    protected LocalDateTime createdAt;
 
 }
