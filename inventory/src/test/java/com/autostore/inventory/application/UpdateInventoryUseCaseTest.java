@@ -102,7 +102,7 @@ public class UpdateInventoryUseCaseTest {
         var updatedI2 = inventoryRepository.findByProductCode("product-2").orElseThrow();
         var activities = activityRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
         var events = eventProducer.getEvents();
-        
+
         assertEquals(0, updatedI1.getAvailableQuantity());
         assertEquals(99, updatedI2.getAvailableQuantity());
         assertEquals(2, activities.size());
@@ -146,6 +146,43 @@ public class UpdateInventoryUseCaseTest {
         var events = eventProducer.getEvents();
         assertEquals(1, events.size());
         assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_FAILED_V1.getTopic()), command.event());
+    }
+
+    @Test
+    void testShouldRollbackInventorySuccessfully() {
+        // Arrange
+        inventoryRepository.save(Inventory.builder().id(null).productCode("product-1").availableQuantity(1).build());
+        inventoryRepository.save(Inventory.builder().id(null).productCode("product-2").availableQuantity(100).build());
+
+        // Act
+        sut.execute(command);
+        var updatedI1 = inventoryRepository.findByProductCode("product-1").orElseThrow();
+        var updatedI2 = inventoryRepository.findByProductCode("product-2").orElseThrow();
+        var activities = activityRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
+        var events = eventProducer.getEvents();
+
+        // Assert
+        assertEquals(0, updatedI1.getAvailableQuantity());
+        assertEquals(99, updatedI2.getAvailableQuantity());
+        assertEquals(2, activities.size());
+        assertEquals(1, events.size());
+        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()), command.event());
+
+        // Act - Rollback
+        sut.rollback(command.event());
+        var rolledBackI1 = inventoryRepository.findByProductCode("product-1").orElseThrow();
+        var rolledBackI2 = inventoryRepository.findByProductCode("product-2").orElseThrow();
+        var rolledBackActivities = activityRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
+        var totalEvents = eventProducer.getEvents();
+
+        // Assert - Rollback
+        assertEquals(1, rolledBackI1.getAvailableQuantity());
+        assertEquals(100, rolledBackI2.getAvailableQuantity());
+        assertEquals(2, rolledBackActivities.size());
+        assertEquals(2, totalEvents.size());
+        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic(), totalEvents.keySet().toArray()[0]);
+        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic(), totalEvents.keySet().toArray()[1]);
+        assertEquals(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()), command.event());
     }
 
 }
