@@ -1,17 +1,16 @@
 package com.autostore.inventory.application;
 
 
-import com.autostore.inventory.application.port.driven.ActivityRepository;
-import com.autostore.inventory.application.port.driven.EventProducer;
-import com.autostore.inventory.application.port.driven.InventoryRepository;
 import com.autostore.inventory.application.port.driver.model.command.UpdateInventoryCommand;
 import com.autostore.inventory.application.usecase.UpdateInventoryUseCase;
+import com.autostore.inventory.domain.Activity;
 import com.autostore.inventory.domain.Inventory;
 import com.autostore.inventory.domain.Product;
 import com.autostore.inventory.domain.ProductCategory;
 import com.autostore.inventory.domain.event.Order;
 import com.autostore.inventory.domain.event.OrderEvent;
 import com.autostore.inventory.domain.event.OrderProducts;
+import com.autostore.inventory.domain.event.Topic;
 import com.autostore.inventory.infrastructure.adapter.driven.event.FakeEventProducer;
 import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryActivityRepository;
 import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryInventoryRepository;
@@ -76,9 +75,9 @@ public class UpdateInventoryUseCaseTest {
                     .build()
     );
 
-    private ActivityRepository activityRepository;
-    private InventoryRepository inventoryRepository;
-    private EventProducer eventProducer;
+    private InMemoryActivityRepository activityRepository;
+    private InMemoryInventoryRepository inventoryRepository;
+    private FakeEventProducer eventProducer;
     private UpdateInventoryUseCase sut;
 
     @BeforeEach
@@ -105,6 +104,44 @@ public class UpdateInventoryUseCaseTest {
         assertEquals(0, updatedI1.getAvailableQuantity());
         assertEquals(99, updatedI2.getAvailableQuantity());
         assertEquals(2, activities.size());
+    }
+
+    @Test
+    void testShouldThrowDuplicatedActivityException() {
+        // Arrange
+        var now = LocalDateTime.now();
+        Inventory i1 =
+                inventoryRepository.save(Inventory.builder().id(null).productCode("product-1").availableQuantity(1).build());
+        Inventory i2 =
+                inventoryRepository.save(Inventory.builder().id(null).productCode("product-2").availableQuantity(100).build());
+        activityRepository.save(Activity.builder()
+                .id(null)
+                .inventory(i1)
+                .orderId("order-id")
+                .transactionId("transaction-id")
+                .orderQuantity(1)
+                .oldQuantity(1)
+                .newQuantity(0)
+                .createdAt(now)
+                .updatedAt(now)
+                .build());
+        activityRepository.save(Activity.builder()
+                .id(null)
+                .inventory(i2)
+                .orderId("order-id")
+                .transactionId("transaction-id")
+                .orderQuantity(1)
+                .oldQuantity(100)
+                .newQuantity(99)
+                .createdAt(now)
+                .updatedAt(now)
+                .build());
+        sut.execute(command);
+
+        // Act & Assert
+        var events = eventProducer.getEvents();
+        assertEquals(1, events.size());
+        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_FAILED_V1.getTopic()), command.event());
     }
 
 }
