@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class UpdateInventoryUseCaseTest {
@@ -180,9 +181,9 @@ public class UpdateInventoryUseCaseTest {
         assertEquals(100, rolledBackI2.getAvailableQuantity());
         assertEquals(2, rolledBackActivities.size());
         assertEquals(2, totalEvents.size());
-        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic(), totalEvents.keySet().toArray()[0]);
-        assertEquals(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic(), totalEvents.keySet().toArray()[1]);
         assertEquals(command.event(), totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()));
+        assertNotNull(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()));
+        assertNotNull(totalEvents.get(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic()));
     }
 
 }

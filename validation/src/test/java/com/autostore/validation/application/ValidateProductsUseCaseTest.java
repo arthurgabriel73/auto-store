@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class ValidateProductsUseCaseTest {
@@ -120,6 +121,24 @@ public class ValidateProductsUseCaseTest {
         assert validation.isEmpty();
         assertEquals(1, events.size());
         assertEquals(command.event(), events.get(Topic.VALIDATION_SERVICE_VALIDATION_FAILED_V1.getTopic()));
+    }
+
+    @Test
+    void testShouldRollbackValidationSuccessfully() {
+        // Arrange
+        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-1").build());
+        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-2").build());
+        sut.execute(command);
+
+        // Act
+        sut.rollback(command.event());
+
+        // Assert
+        var totalEvents = eventProducer.getEvents();
+
+        assertEquals(2, totalEvents.size());
+        assertNotNull(totalEvents.get(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic()));
+        assertEquals(command.event(), totalEvents.get(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic()));
     }
 
 }
