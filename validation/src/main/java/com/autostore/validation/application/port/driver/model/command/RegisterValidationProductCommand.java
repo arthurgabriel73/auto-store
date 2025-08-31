@@ -4,19 +4,19 @@ package com.autostore.validation.application.port.driver.model.command;
 import com.autostore.validation.application.exception.ValidationException;
 
 
-public record RegisterValidationProductCommand(String code, double unitValue) {
+public record RegisterValidationProductCommand(String code) {
 
     public RegisterValidationProductCommand {
         validateCode(code);
-        validateUnitValue(unitValue);
     }
 
     private void validateCode(String code) {
-        if (code == null || code.isBlank()) throw new ValidationException("Product code cannot be null or blank.");
-    }
-
-    private void validateUnitValue(double unitValue) {
-        if (unitValue <= 0) throw new ValidationException("Product unit value must be greater than zero.");
+        if (
+                code == null
+                        || code.isBlank()
+                        || code.trim().isEmpty()
+                        || code.length() > 100
+        ) throw new ValidationException("Product code cannot be blank and must be less than 100 characters.");
     }
 
 }
