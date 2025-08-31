@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public record Activity(
-        Integer id,
+        Long id,
         Inventory inventory,
         String orderId,
         String transactionId,
