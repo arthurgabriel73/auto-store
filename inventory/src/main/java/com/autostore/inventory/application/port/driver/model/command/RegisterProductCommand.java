@@ -7,7 +7,6 @@ import java.util.Map;
 
 
 public record RegisterProductCommand(
-        Long id,
         String code,
         Double unitValue,
         ProductCategory category,
