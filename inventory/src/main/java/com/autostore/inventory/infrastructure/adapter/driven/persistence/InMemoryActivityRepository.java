@@ -14,8 +14,10 @@ public class InMemoryActivityRepository implements ActivityRepository {
 
 
     @Override
-    public void save(Activity activity) {
-        activities.add(toNewInstance(activity));
+    public Activity save(Activity activity) {
+        Activity newActivity = toNewInstance(activity);
+        activities.add(newActivity);
+        return toNewInstance(newActivity);
     }
 
     @Override

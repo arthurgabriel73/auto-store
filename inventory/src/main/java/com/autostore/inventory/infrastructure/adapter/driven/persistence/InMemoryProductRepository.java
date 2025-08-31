@@ -14,8 +14,9 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        products.add(toNewInstance(product));
-        return toNewInstance(product);
+        Product newProduct = toNewInstance(product);
+        products.add(newProduct);
+        return toNewInstance(newProduct);
     }
 
     @Override
