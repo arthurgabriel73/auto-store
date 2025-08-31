@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ActivityRepository {
 
-    void save(Activity activity);
+    Activity save(Activity activity);
 
     List<Activity> findByOrderIdAndTransactionId(String orderId, String transactionId);
 

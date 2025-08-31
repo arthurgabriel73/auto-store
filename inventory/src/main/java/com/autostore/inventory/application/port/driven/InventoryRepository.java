@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface InventoryRepository {
 
-    void save(Inventory inventory);
+    Inventory save(Inventory inventory);
 
     Optional<Inventory> findByProductCode(String productCode);
 
