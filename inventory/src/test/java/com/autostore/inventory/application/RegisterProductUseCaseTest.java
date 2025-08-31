@@ -5,6 +5,7 @@ import com.autostore.inventory.application.exception.ProductCodeAlreadyRegistere
 import com.autostore.inventory.application.port.driver.model.command.RegisterProductCommand;
 import com.autostore.inventory.application.usecase.RegisterProductUseCase;
 import com.autostore.inventory.domain.ProductCategory;
+import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryInventoryRepository;
 import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +32,14 @@ public class RegisterProductUseCaseTest {
     );
 
     private InMemoryProductRepository productRepository;
+    private InMemoryInventoryRepository inventoryRepository;
     private RegisterProductUseCase sut;
 
     @BeforeEach
     void setUp() {
         productRepository = new InMemoryProductRepository();
-        sut = new RegisterProductUseCase(productRepository);
+        inventoryRepository = new InMemoryInventoryRepository();
+        sut = new RegisterProductUseCase(productRepository, inventoryRepository);
     }
 
     @Test
@@ -50,6 +53,9 @@ public class RegisterProductUseCaseTest {
         assertEquals(command.code(), output.getProductCode());
         assertEquals(command.unitValue(), output.getUnitValue());
         assertEquals(command.category().name(), output.getCategory());
+        var productInventory = inventoryRepository.findByProductCode(command.code());
+        assertTrue(productInventory.isPresent());
+        assertEquals(0, productInventory.get().getAvailableQuantity());
     }
 
     @Test
