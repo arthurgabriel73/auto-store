@@ -1,4 +1,4 @@
-package com.autostore.inventory.application.driver.model.command;
+package com.autostore.inventory.application.port.driver.model.command;
 
 
 import com.autostore.inventory.domain.ProductCategory;
