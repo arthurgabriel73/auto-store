@@ -1,4 +1,4 @@
-package com.autostore.inventory.application.driver.model;
+package com.autostore.inventory.application.driver;
 
 
 import com.autostore.inventory.application.driver.model.command.RegisterProductCommand;
