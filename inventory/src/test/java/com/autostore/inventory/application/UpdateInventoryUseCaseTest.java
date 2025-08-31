@@ -101,9 +101,13 @@ public class UpdateInventoryUseCaseTest {
         var updatedI1 = inventoryRepository.findByProductCode("product-1").orElseThrow();
         var updatedI2 = inventoryRepository.findByProductCode("product-2").orElseThrow();
         var activities = activityRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
+        var events = eventProducer.getEvents();
+        
         assertEquals(0, updatedI1.getAvailableQuantity());
         assertEquals(99, updatedI2.getAvailableQuantity());
         assertEquals(2, activities.size());
+        assertEquals(1, events.size());
+        assertEquals(events.get(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic()), command.event());
     }
 
     @Test
