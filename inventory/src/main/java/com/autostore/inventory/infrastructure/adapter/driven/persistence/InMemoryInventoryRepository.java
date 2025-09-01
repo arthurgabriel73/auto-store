@@ -15,9 +15,10 @@ public class InMemoryInventoryRepository implements InventoryRepository {
 
     @Override
     public Inventory save(Inventory inventory) {
-        Inventory newInventory = toNewInstance(inventory);
-        inventoryList.add(newInventory);
-        return toNewInstance(newInventory);
+        Inventory toSave = toNewInstance(inventory);
+        inventoryList.removeIf(i -> isSameInventory(i, toSave));
+        inventoryList.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -32,6 +33,10 @@ public class InMemoryInventoryRepository implements InventoryRepository {
                 .productCode(inventory.getProductCode())
                 .availableQuantity(inventory.getAvailableQuantity())
                 .build();
+    }
+
+    private boolean isSameInventory(Inventory a, Inventory b) {
+        return a.getId().equals(b.getId());
     }
 
 }
