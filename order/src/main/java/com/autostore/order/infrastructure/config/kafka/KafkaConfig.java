@@ -1,6 +1,7 @@
 package com.autostore.order.infrastructure.config.kafka;
 
 
+import com.autostore.order.application.port.event.Topic;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -72,6 +73,16 @@ public class KafkaConfig {
                 .replicas(REPLICA_COUNT)
                 .partitions(PARTITION_COUNT)
                 .build();
+    }
+
+    @Bean
+    public NewTopic orderCreated() {
+        return buildTopic(Topic.ORDER_SERVICE_ORDER_CREATED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic orderFailed() {
+        return buildTopic(Topic.ORDER_SERVICE_ORDER_FAILED_V1.getTopic());
     }
 
 }

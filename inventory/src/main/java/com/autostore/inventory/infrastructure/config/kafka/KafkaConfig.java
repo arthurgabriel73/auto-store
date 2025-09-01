@@ -1,6 +1,7 @@
 package com.autostore.inventory.infrastructure.config.kafka;
 
 
+import com.autostore.inventory.application.port.event.Topic;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -72,6 +73,26 @@ public class KafkaConfig {
                 .replicas(REPLICA_COUNT)
                 .partitions(PARTITION_COUNT)
                 .build();
+    }
+
+    @Bean
+    public NewTopic inventoryUpdated() {
+        return buildTopic(Topic.INVENTORY_SERVICE_INVENTORY_UPDATED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic inventoryFailed() {
+        return buildTopic(Topic.INVENTORY_SERVICE_INVENTORY_FAILED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic inventoryRollbackSuccess() {
+        return buildTopic(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic inventoryRollbackFailed() {
+        return buildTopic(Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_FAILED_V1.getTopic());
     }
 
 }

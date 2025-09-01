@@ -1,6 +1,7 @@
 package com.autostore.validation.infrastructure.config.kafka;
 
 
+import com.autostore.validation.application.port.event.Topic;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -72,6 +73,26 @@ public class KafkaConfig {
                 .replicas(REPLICA_COUNT)
                 .partitions(PARTITION_COUNT)
                 .build();
+    }
+
+    @Bean
+    public NewTopic validationUpdatedTopic() {
+        return buildTopic(Topic.VALIDATION_SERVICE_VALIDATION_UPDATED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic validationFailedTopic() {
+        return buildTopic(Topic.VALIDATION_SERVICE_VALIDATION_FAILED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic validationRollbackSuccessTopic() {
+        return buildTopic(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic validationRollbackFailedTopic() {
+        return buildTopic(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_FAILED_V1.getTopic());
     }
 
 }

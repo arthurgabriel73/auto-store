@@ -1,6 +1,7 @@
 package com.autostore.payment.infrastructure.config.kafka;
 
 
+import com.autostore.payment.application.port.event.Topic;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -72,6 +73,26 @@ public class KafkaConfig {
                 .replicas(REPLICA_COUNT)
                 .partitions(PARTITION_COUNT)
                 .build();
+    }
+
+    @Bean
+    public NewTopic paymentProcessed() {
+        return buildTopic(Topic.PAYMENT_SERVICE_PAYMENT_PROCESSED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic paymentFailed() {
+        return buildTopic(Topic.PAYMENT_SERVICE_PAYMENT_FAILED_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic paymentRefundSuccess() {
+        return buildTopic(Topic.PAYMENT_SERVICE_PAYMENT_REFUND_SUCCESS_V1.getTopic());
+    }
+
+    @Bean
+    public NewTopic paymentRefundFailed() {
+        return buildTopic(Topic.PAYMENT_SERVICE_PAYMENT_REFUND_FAILED_V1.getTopic());
     }
 
 }
