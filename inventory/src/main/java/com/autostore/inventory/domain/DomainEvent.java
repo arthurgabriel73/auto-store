@@ -1,4 +1,4 @@
-package com.autostore.inventory.domain.event;
+package com.autostore.inventory.domain;
 
 
 import lombok.AllArgsConstructor;
