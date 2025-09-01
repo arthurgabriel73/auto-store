@@ -8,9 +8,11 @@ import com.autostore.inventory.application.port.driven.ProductRepository;
 import com.autostore.inventory.application.port.driver.AddProductStockDriverPort;
 import com.autostore.inventory.application.port.driver.RegisterProductDriverPort;
 import com.autostore.inventory.application.port.driver.UpdateInventoryDriverPort;
+import com.autostore.inventory.application.port.driver.UpdateProductDriverPort;
 import com.autostore.inventory.application.usecase.AddProductStockUseCase;
 import com.autostore.inventory.application.usecase.RegisterProductUseCase;
 import com.autostore.inventory.application.usecase.UpdateInventoryUseCase;
+import com.autostore.inventory.application.usecase.UpdateProductUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +34,13 @@ public class UseCasesBeanConfiguration {
             InventoryRepository inventoryRepository
     ) {
         return new RegisterProductUseCase(productRepository, inventoryRepository);
+    }
+
+    @Bean
+    public UpdateProductDriverPort updateProductDriverPort(
+            ProductRepository productRepository
+    ) {
+        return new UpdateProductUseCase(productRepository);
     }
 
     @Bean

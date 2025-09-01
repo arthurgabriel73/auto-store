@@ -6,6 +6,7 @@ import com.autostore.inventory.domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class InMemoryProductRepository implements ProductRepository {
@@ -24,6 +25,11 @@ public class InMemoryProductRepository implements ProductRepository {
     public Boolean existsByCode(String code) {
         return products.stream()
                 .anyMatch(product -> product.getCode().equals(code));
+    }
+
+    @Override
+    public Optional<Product> findByCode(String code) {
+        return products.stream().filter(product -> product.getCode().equals(code)).findFirst();
     }
 
     private Product toNewInstance(Product product) {
