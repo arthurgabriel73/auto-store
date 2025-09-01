@@ -8,6 +8,9 @@ spring:
 
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    command-topics:
+      validate-order: validate-order
+      rollback-order-validation: rollback-order-validation
     consumer:
       group-id: validation-group
       auto-offset-reset: latest
