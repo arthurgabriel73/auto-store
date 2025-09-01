@@ -8,6 +8,9 @@ spring:
 
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    command-topics:
+      update-inventory: update-inventory
+      rollback-inventory-update: rollback-inventory-update
     consumer:
       group-id: inventory-group
       auto-offset-reset: latest
