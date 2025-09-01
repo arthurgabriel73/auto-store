@@ -21,7 +21,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.update-inventory}"
+            topics = "${spring.kafka.command-topics.update-inventory-command}"
     )
     public void consumeUpdateInventoryCommand(String payload) {
         log.info("Receiving event {}", payload);
@@ -31,7 +31,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.rollback-inventory-update}"
+            topics = "${spring.kafka.command-topics.rollback-inventory-update-command}"
     )
     public void consumeRollbackInventoryUpdateCommand(String payload) {
         log.info("Received rollback event {}", payload);
