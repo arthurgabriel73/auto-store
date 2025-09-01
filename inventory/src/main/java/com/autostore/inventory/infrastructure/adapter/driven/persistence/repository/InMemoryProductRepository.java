@@ -1,4 +1,4 @@
-package com.autostore.inventory.infrastructure.adapter.driven.persistence;
+package com.autostore.inventory.infrastructure.adapter.driven.persistence.repository;
 
 
 import com.autostore.inventory.application.port.driven.ProductRepository;
