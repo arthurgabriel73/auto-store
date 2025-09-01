@@ -15,8 +15,9 @@ public class InMemoryValidationRepository implements ValidationRepository {
 
     @Override
     public void save(Validation validation) {
-        var newValidation = toNewInstance(validation);
-        validations.add(newValidation);
+        Validation toSave = toNewInstance(validation);
+        validations.removeIf(v -> isSameValidation(v, toSave));
+        validations.add(toSave);
     }
 
     @Override
@@ -43,6 +44,10 @@ public class InMemoryValidationRepository implements ValidationRepository {
                 .updatedAt(validation.getUpdatedAt())
                 .success(validation.isSuccess())
                 .build();
+    }
+
+    private boolean isSameValidation(Validation a, Validation b) {
+        return a.getId().equals(b.getId());
     }
 
 }
