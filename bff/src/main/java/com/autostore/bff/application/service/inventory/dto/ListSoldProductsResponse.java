@@ -1,6 +1,9 @@
 package com.autostore.bff.application.service.inventory.dto;
 
 
-public class ListSoldProductsResponse {
+import java.util.List;
+
+
+public record ListSoldProductsResponse(List<ProductResponse> products) {
 
 }
