@@ -22,6 +22,8 @@ feign:
     config:
       user-service:
         url: ${USER_SERVICE_URL:http://localhost:3100/api/v1/user}
+      inventory-service:
+        url: ${INVENTORY_SERVICE_URL:http://localhost:3500/api/v1/inventory}
 
 logging:
   level:

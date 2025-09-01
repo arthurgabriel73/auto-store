@@ -4,28 +4,34 @@ package com.autostore.bff.infrastructure.adapter.driven.client;
 import com.autostore.bff.application.port.driven.InventoryGateway;
 import com.autostore.bff.application.service.inventory.dto.*;
 import jakarta.inject.Named;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 @Named
-public class InventoryClient implements InventoryGateway {
+@FeignClient(name = "inventory-client", url = "${feign.client.config.inventory-service.url}")
+public interface InventoryClient extends InventoryGateway {
 
     @Override
-    public RegisterProductResponse registerProduct(RegisterProductRequest request) {
-        return null;
-    }
+    @PostMapping("/product")
+    RegisterProductResponse registerProduct(RegisterProductRequest request);
 
     @Override
-    public void updateProduct(UpdateProductRequest request) {
-    }
+    @PostMapping("/product/stock")
+    void addProductStock(AddProductStockRequest request);
 
     @Override
-    public ListAvailableProductsResponse listAvailableProducts() {
-        return null;
-    }
+    @PutMapping("/product")
+    void updateProduct(UpdateProductRequest request);
 
     @Override
-    public ListSoldProductsResponse listSoldProducts() {
-        return null;
-    }
+    @GetMapping("/products/available")
+    ListAvailableProductsResponse listAvailableProducts();
+
+    @Override
+    @GetMapping("/products/sold")
+    ListSoldProductsResponse listSoldProducts();
 
 }

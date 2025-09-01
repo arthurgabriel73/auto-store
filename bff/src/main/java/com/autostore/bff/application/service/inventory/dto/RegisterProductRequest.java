@@ -11,9 +11,9 @@ import java.util.Map;
 @Builder
 public class RegisterProductRequest {
 
-    String code;
-    Double unitValue;
-    String category;
-    Map<String, Object> details;
+    private String code;
+    private Double unitValue;
+    private String category;
+    private Map<String, Object> details;
 
 }

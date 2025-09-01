@@ -35,12 +35,18 @@ public class AutoStoreController {
 
     @PostMapping("/register-customer")
     public ResponseEntity<RegisterUserResponse> registerUser(@RequestBody RegisterUserRequest request) {
-        return new ResponseEntity<RegisterUserResponse>(userService.registerUser(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.registerUser(request), HttpStatus.CREATED);
     }
 
     @PostMapping("/register-product")
     public ResponseEntity<RegisterProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
-        return new ResponseEntity<RegisterProductResponse>(inventoryService.registerProduct(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(inventoryService.registerProduct(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add-product-stock")
+    public ResponseEntity<Void> registerProduct(@RequestBody AddProductStockRequest request) {
+        inventoryService.addProductStock(request);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/available-products")
@@ -61,7 +67,7 @@ public class AutoStoreController {
 
     @PostMapping("/create-order")
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody CreateOrderRequest request) {
-        return new ResponseEntity<CreateOrderResponse>(orderService.createOrder(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderService.createOrder(request), HttpStatus.CREATED);
     }
 
 }
