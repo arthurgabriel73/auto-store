@@ -14,9 +14,10 @@ public class InMemoryValidationProductRepository implements ValidationProductRep
 
     @Override
     public ValidationProduct save(ValidationProduct validationProduct) {
-        var newProduct = toNewInstance(validationProduct);
-        products.add(newProduct);
-        return toNewInstance(newProduct);
+        ValidationProduct toSave = toNewInstance(validationProduct);
+        products.removeIf(p -> isSameProduct(p, toSave));
+        products.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -30,6 +31,10 @@ public class InMemoryValidationProductRepository implements ValidationProductRep
                 .id(product.id() != null ? product.id() : products.size() + 1)
                 .code(product.code())
                 .build();
+    }
+
+    private boolean isSameProduct(ValidationProduct a, ValidationProduct b) {
+        return a.id().equals(b.id());
     }
 
 }
