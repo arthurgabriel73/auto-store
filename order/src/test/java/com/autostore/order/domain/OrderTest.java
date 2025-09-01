@@ -17,7 +17,7 @@ public class OrderTest {
         // Arrange
         Product product = new Product("Product 1", 100.0);
         List<OrderProducts> orderProducts = List.of(new OrderProducts(product, 2));
-        OrderCustomer customer = new OrderCustomer("customer123");
+        OrderCustomer customer = OrderCustomer.of("customer123");
 
         // Act
         Order order = Order.of(
@@ -46,7 +46,7 @@ public class OrderTest {
         Product product = new Product("Product 1", 100.0);
         List<OrderProducts> orderProducts = List.of(new OrderProducts(product, 2));
         String transactionId = "txn123";
-        OrderCustomer customer = new OrderCustomer("customer123");
+        OrderCustomer customer = OrderCustomer.of("customer123");
         var expectedTotalAmount = 200.0;
         var expectedTotalItems = 2;
 
@@ -70,7 +70,7 @@ public class OrderTest {
         Product product = new Product("Product 1", 0.0);
         List<OrderProducts> orderProducts = List.of(new OrderProducts(product, 2));
         String transactionId = "txn123";
-        OrderCustomer customer = new OrderCustomer("customer123");
+        OrderCustomer customer = OrderCustomer.of("customer123");
 
         // Act & Assert
         assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, customer));
@@ -81,7 +81,7 @@ public class OrderTest {
         // Arrange
         List<OrderProducts> orderProducts = List.of();
         String transactionId = "txn123";
-        OrderCustomer customer = new OrderCustomer("customer123");
+        OrderCustomer customer = OrderCustomer.of("customer123");
 
         // Act & Assert
         assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, customer));
@@ -95,8 +95,8 @@ public class OrderTest {
         String transactionId = "txn123";
 
         // Act & Assert
-        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, new OrderCustomer(null)));
-        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, new OrderCustomer("")));
+        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, OrderCustomer.of(null)));
+        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, OrderCustomer.of("")));
     }
 
 }

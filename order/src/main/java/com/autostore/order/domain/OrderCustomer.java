@@ -2,12 +2,21 @@ package com.autostore.order.domain;
 
 
 import com.autostore.order.domain.exception.BusinessException;
+import lombok.Getter;
 
 
-public record OrderCustomer(String customerId) {
+@Getter
+public class OrderCustomer {
 
-    public OrderCustomer {
+    private final String customerId;
+
+    private OrderCustomer(String customerId) {
         validateCustomerId(customerId);
+        this.customerId = customerId;
+    }
+
+    public static OrderCustomer of(String customerId) {
+        return new OrderCustomer(customerId);
     }
 
     private void validateCustomerId(String customerId) {
