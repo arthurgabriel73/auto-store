@@ -15,8 +15,8 @@ public class InventoryService {
         return inventoryGateway.registerProduct(request);
     }
 
-    public UpdateProductResponse updateProduct(UpdateProductRequest request) {
-        return inventoryGateway.updateProduct(request);
+    public void updateProduct(UpdateProductRequest request) {
+        inventoryGateway.updateProduct(request);
     }
 
     public ListAvailableProductsResponse listAvailableProducts() {

@@ -8,7 +8,7 @@ public interface InventoryGateway {
 
     RegisterProductResponse registerProduct(RegisterProductRequest request);
 
-    UpdateProductResponse updateProduct(UpdateProductRequest request);
+    void updateProduct(UpdateProductRequest request);
 
     ListAvailableProductsResponse listAvailableProducts();
 

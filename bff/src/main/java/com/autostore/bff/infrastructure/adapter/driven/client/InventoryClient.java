@@ -13,8 +13,7 @@ public class InventoryClient implements InventoryGateway {
     }
 
     @Override
-    public UpdateProductResponse updateProduct(UpdateProductRequest request) {
-        return null;
+    public void updateProduct(UpdateProductRequest request) {
     }
 
     @Override
