@@ -3,18 +3,13 @@ package com.autostore.bff.application.port.driven;
 
 import com.autostore.bff.domain.DomainEvent;
 
-import java.util.List;
 import java.util.Optional;
 
 
-public interface EventRepository {
+public interface EventRepository<T> {
 
-    DomainEvent<?> save(DomainEvent<?> event);
+    DomainEvent<T> save(DomainEvent<T> event);
 
-    List<DomainEvent<?>> findAllByOrderByCreatedAtDesc();
-
-    Optional<DomainEvent<?>> findTop1ByOrderIdOrderByCreatedAtDesc(String orderId);
-
-    Optional<DomainEvent<?>> findTop1ByTransactionIdOrderByCreatedAtDesc(String transactionId);
+    Optional<DomainEvent<T>> findTop1ByTransactionIdOrderByCreatedAtDesc(String transactionId);
 
 }
