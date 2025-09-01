@@ -5,8 +5,8 @@ import com.autostore.inventory.application.exception.ProductCodeAlreadyRegistere
 import com.autostore.inventory.application.port.driver.model.command.RegisterProductCommand;
 import com.autostore.inventory.application.usecase.RegisterProductUseCase;
 import com.autostore.inventory.domain.ProductCategory;
-import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryInventoryRepository;
-import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryProductRepository;
+import com.autostore.inventory.infrastructure.adapter.driven.persistence.repository.InMemoryInventoryRepository;
+import com.autostore.inventory.infrastructure.adapter.driven.persistence.repository.InMemoryProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

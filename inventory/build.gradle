@@ -45,6 +45,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.23.0")
     testImplementation("org.junit.platform:junit-platform-suite-api:1.9.3")
     implementation 'com.github.javafaker:javafaker:1.0.2'
+    implementation("com.vladmihalcea:hibernate-types-60:2.21.1")
 
 }
 

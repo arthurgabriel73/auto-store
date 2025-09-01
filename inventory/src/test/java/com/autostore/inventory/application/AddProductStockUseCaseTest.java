@@ -7,8 +7,8 @@ import com.autostore.inventory.application.usecase.AddProductStockUseCase;
 import com.autostore.inventory.domain.Inventory;
 import com.autostore.inventory.domain.Product;
 import com.autostore.inventory.domain.ProductCategory;
-import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryInventoryRepository;
-import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryProductRepository;
+import com.autostore.inventory.infrastructure.adapter.driven.persistence.repository.InMemoryInventoryRepository;
+import com.autostore.inventory.infrastructure.adapter.driven.persistence.repository.InMemoryProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
