@@ -2,7 +2,7 @@ package com.autostore.validation.application.port.driver;
 
 
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
-import com.autostore.validation.domain.event.OrderEvent;
+import com.autostore.validation.application.port.event.OrderEvent;
 
 
 public interface ValidateProductsDriverPort {

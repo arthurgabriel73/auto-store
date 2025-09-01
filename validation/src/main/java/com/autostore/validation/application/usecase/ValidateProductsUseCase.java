@@ -8,9 +8,9 @@ import com.autostore.validation.application.port.driven.ValidationProductReposit
 import com.autostore.validation.application.port.driven.ValidationRepository;
 import com.autostore.validation.application.port.driver.ValidateProductsDriverPort;
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
+import com.autostore.validation.application.port.event.OrderEvent;
+import com.autostore.validation.application.port.event.Topic;
 import com.autostore.validation.domain.Validation;
-import com.autostore.validation.domain.event.OrderEvent;
-import com.autostore.validation.domain.event.Topic;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

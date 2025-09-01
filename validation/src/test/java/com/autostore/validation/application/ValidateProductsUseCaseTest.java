@@ -2,9 +2,9 @@ package com.autostore.validation.application;
 
 
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
+import com.autostore.validation.application.port.event.*;
 import com.autostore.validation.application.usecase.ValidateProductsUseCase;
 import com.autostore.validation.domain.ValidationProduct;
-import com.autostore.validation.domain.event.*;
 import com.autostore.validation.infrastructure.adapter.driven.event.FakeEventProducer;
 import com.autostore.validation.infrastructure.adapter.driven.persistence.InMemoryValidationProductRepository;
 import com.autostore.validation.infrastructure.adapter.driven.persistence.InMemoryValidationRepository;

@@ -2,7 +2,7 @@ package com.autostore.validation.infrastructure.adapter.driven.event;
 
 
 import com.autostore.validation.application.port.driven.EventProducer;
-import com.autostore.validation.domain.event.DomainEvent;
+import com.autostore.validation.domain.DomainEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
