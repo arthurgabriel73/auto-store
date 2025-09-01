@@ -15,9 +15,10 @@ public class InMemoryPaymentRepository implements PaymentRepository {
 
     @Override
     public Payment save(Payment payment) {
-        var newPayment = toNewInstance(payment);
-        payments.add(newPayment);
-        return toNewInstance(newPayment);
+        Payment toSave = toNewInstance(payment);
+        payments.removeIf(p -> isSamePayment(p, toSave));
+        payments.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -46,6 +47,11 @@ public class InMemoryPaymentRepository implements PaymentRepository {
                 .updatedAt(payment.getUpdatedAt())
                 .status(payment.getStatus())
                 .build();
+    }
+
+    private boolean isSamePayment(Payment a, Payment b) {
+        return a.getOrderId().equals(b.getOrderId()) &&
+                a.getTransactionId().equals(b.getTransactionId());
     }
 
 }
