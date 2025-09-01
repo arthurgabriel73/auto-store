@@ -1,4 +1,4 @@
-package com.autostore.validation.domain.event;
+package com.autostore.validation.domain;
 
 
 import lombok.AllArgsConstructor;

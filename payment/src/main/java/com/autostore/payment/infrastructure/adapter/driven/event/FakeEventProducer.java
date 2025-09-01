@@ -1,8 +1,8 @@
-package com.autostore.inventory.infrastructure.adapter.driven.event;
+package com.autostore.payment.infrastructure.adapter.driven.event;
 
 
-import com.autostore.inventory.application.port.driven.EventProducer;
-import com.autostore.inventory.domain.DomainEvent;
+import com.autostore.payment.application.port.driven.EventProducer;
+import com.autostore.payment.domain.DomainEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

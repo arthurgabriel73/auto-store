@@ -1,4 +1,4 @@
-package com.autostore.inventory.domain.event;
+package com.autostore.payment.application.port.event;
 
 
 import lombok.Builder;

@@ -14,9 +14,10 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        Product newProduct = toNewInstance(product);
-        products.add(newProduct);
-        return toNewInstance(newProduct);
+        Product toSave = toNewInstance(product);
+        products.removeIf(p -> isSameProduct(p, toSave));
+        products.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -34,6 +35,10 @@ public class InMemoryProductRepository implements ProductRepository {
                 .category(product.getCategory())
                 .details(product.getDetails())
                 .build();
+    }
+
+    private boolean isSameProduct(Product a, Product b) {
+        return a.getId().equals(b.getId());
     }
 
 }

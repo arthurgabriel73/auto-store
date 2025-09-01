@@ -2,15 +2,15 @@ package com.autostore.inventory.application;
 
 
 import com.autostore.inventory.application.port.driver.model.command.UpdateInventoryCommand;
+import com.autostore.inventory.application.port.event.Order;
+import com.autostore.inventory.application.port.event.OrderEvent;
+import com.autostore.inventory.application.port.event.OrderProducts;
+import com.autostore.inventory.application.port.event.Topic;
 import com.autostore.inventory.application.usecase.UpdateInventoryUseCase;
 import com.autostore.inventory.domain.Activity;
 import com.autostore.inventory.domain.Inventory;
 import com.autostore.inventory.domain.Product;
 import com.autostore.inventory.domain.ProductCategory;
-import com.autostore.inventory.domain.event.Order;
-import com.autostore.inventory.domain.event.OrderEvent;
-import com.autostore.inventory.domain.event.OrderProducts;
-import com.autostore.inventory.domain.event.Topic;
 import com.autostore.inventory.infrastructure.adapter.driven.event.FakeEventProducer;
 import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryActivityRepository;
 import com.autostore.inventory.infrastructure.adapter.driven.persistence.InMemoryInventoryRepository;

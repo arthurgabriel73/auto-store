@@ -1,13 +1,13 @@
-package com.autostore.validation.application;
+package com.autostore.payment.application;
 
 
-import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
-import com.autostore.validation.application.port.event.*;
-import com.autostore.validation.application.usecase.ValidateProductsUseCase;
-import com.autostore.validation.domain.ValidationProduct;
-import com.autostore.validation.infrastructure.adapter.driven.event.FakeEventProducer;
-import com.autostore.validation.infrastructure.adapter.driven.persistence.InMemoryValidationProductRepository;
-import com.autostore.validation.infrastructure.adapter.driven.persistence.InMemoryValidationRepository;
+import com.autostore.payment.application.port.driver.model.command.ProcessPaymentCommand;
+import com.autostore.payment.application.port.event.*;
+import com.autostore.payment.application.usecase.ProcessPaymentUseCase;
+import com.autostore.payment.domain.Payment;
+import com.autostore.payment.domain.PaymentStatus;
+import com.autostore.payment.infrastructure.adapter.driven.event.FakeEventProducer;
+import com.autostore.payment.infrastructure.adapter.driven.persistence.InMemoryPaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class ValidateProductsUseCaseTest {
+public class ProcessPaymentUseCaseTest {
 
-    private static final ValidateProductsCommand command = new ValidateProductsCommand(
+    private static final ProcessPaymentCommand command = new ProcessPaymentCommand(
             OrderEvent
                     .builder()
                     .id("event-id")
@@ -68,77 +68,69 @@ public class ValidateProductsUseCaseTest {
                             )
                             .build())
                     .build()
+
     );
 
-    private InMemoryValidationRepository validationRepository;
-    private InMemoryValidationProductRepository validationProductRepository;
+    private InMemoryPaymentRepository paymentRepository;
     private FakeEventProducer eventProducer;
-    private ValidateProductsUseCase sut;
+    private ProcessPaymentUseCase sut;
 
     @BeforeEach
     void setUp() {
-        validationRepository = new InMemoryValidationRepository();
-        validationProductRepository = new InMemoryValidationProductRepository();
+        paymentRepository = new InMemoryPaymentRepository();
         eventProducer = new FakeEventProducer();
-        sut = new ValidateProductsUseCase(
-                validationRepository,
-                validationProductRepository,
-                eventProducer
-        );
+        sut = new ProcessPaymentUseCase(paymentRepository, eventProducer);
     }
 
     @Test
-    void testShouldValidateProductsSuccessfully() {
+    void testShouldProcessPaymentSuccessfully() {
+        // Arrange & Act
+        sut.execute(command);
+
+        // Assert
+        var events = eventProducer.getEvents();
+        assertEquals(1, events.size());
+        assertEquals(command.event(), events.get(Topic.PAYMENT_SERVICE_PAYMENT_PROCESSED_V1.getTopic()));
+    }
+
+    @Test
+    void testShouldThrowWhenTryingToProcessDuplicatedPendingPayment() {
         // Arrange
-        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-1").build());
-        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-2").build());
+        paymentRepository.save(Payment.builder()
+                .id(null)
+                .orderId("order-id")
+                .transactionId("transaction-id")
+                .totalAmount(1200_000.99)
+                .totalItems(2)
+                .status(PaymentStatus.PENDING)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build());
 
         // Act
         sut.execute(command);
 
         // Assert
-        var validation = validationRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
         var events = eventProducer.getEvents();
 
-        assert validation.isPresent();
-        assert validation.get().isSuccess();
         assertEquals(1, events.size());
-        assertEquals(command.event(), events.get(Topic.VALIDATION_SERVICE_VALIDATION_UPDATED_V1.getTopic()));
+        assertEquals(command.event(), events.get(Topic.PAYMENT_SERVICE_PAYMENT_FAILED_V1.getTopic()));
     }
 
     @Test
-    void testShouldThrowExceptionWhenOneOfProductsNotExists() {
+    void testShouldRefundPaymentSuccessfully() {
         // Arrange
-        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-1").build());
-
-        // Act
-        sut.execute(command);
-
-        // Assert
-        var validation = validationRepository.findByOrderIdAndTransactionId("order-id", "transaction-id");
-        var events = eventProducer.getEvents();
-
-        assert validation.isEmpty();
-        assertEquals(1, events.size());
-        assertEquals(command.event(), events.get(Topic.VALIDATION_SERVICE_VALIDATION_FAILED_V1.getTopic()));
-    }
-
-    @Test
-    void testShouldRollbackValidationSuccessfully() {
-        // Arrange
-        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-1").build());
-        validationProductRepository.save(ValidationProduct.builder().id(null).code("product-2").build());
         sut.execute(command);
 
         // Act
         sut.rollback(command.event());
 
         // Assert
-        var totalEvents = eventProducer.getEvents();
+        var events = eventProducer.getEvents();
 
-        assertEquals(2, totalEvents.size());
-        assertNotNull(totalEvents.get(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic()));
-        assertEquals(command.event(), totalEvents.get(Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic()));
+        assertEquals(2, events.size());
+        assertNotNull(events.get(Topic.PAYMENT_SERVICE_PAYMENT_REFUND_SUCCESS_V1.getTopic()));
+        assertEquals(command.event(), events.get(Topic.PAYMENT_SERVICE_PAYMENT_REFUND_SUCCESS_V1.getTopic()));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.autostore.validation.domain.event;
+package com.autostore.validation.application.port.event;
 
 
 public record OrderProducts(

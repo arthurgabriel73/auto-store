@@ -2,7 +2,7 @@ package com.autostore.validation.application.port.driver.model.command;
 
 
 import com.autostore.validation.application.exception.ApplicationException;
-import com.autostore.validation.domain.event.OrderEvent;
+import com.autostore.validation.application.port.event.OrderEvent;
 
 
 public record ValidateProductsCommand(OrderEvent event) {

@@ -1,7 +1,7 @@
 package com.autostore.inventory.application.port.driven;
 
 
-import com.autostore.inventory.domain.event.DomainEvent;
+import com.autostore.inventory.domain.DomainEvent;
 
 
 public interface EventProducer {

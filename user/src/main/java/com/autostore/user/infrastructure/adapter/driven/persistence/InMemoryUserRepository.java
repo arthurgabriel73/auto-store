@@ -18,8 +18,10 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
-        users.add(toNewInstance(user));
-        return toNewInstance(user);
+        User toSave = toNewInstance(user);
+        users.removeIf(u -> isSameUser(u, toSave));
+        users.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -54,6 +56,10 @@ public class InMemoryUserRepository implements UserRepository {
                 .updatedAt(user.getUpdatedAt())
                 .address(user.getAddress())
                 .build();
+    }
+
+    private boolean isSameUser(User a, User b) {
+        return a.getCpf().equals(b.getCpf()) && a.getEmail().equals(b.getEmail());
     }
 
 }
