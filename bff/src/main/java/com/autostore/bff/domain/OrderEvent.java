@@ -1,7 +1,7 @@
-package com.autostore.bff.application.port.event;
+package com.autostore.bff.domain;
 
 
-import com.autostore.bff.domain.DomainEvent;
+import com.autostore.bff.domain.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
