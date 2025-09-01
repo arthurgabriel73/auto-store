@@ -7,21 +7,20 @@ import com.autostore.bff.application.service.user.dto.AuthUserResponse;
 import com.autostore.bff.application.service.user.dto.RegisterUserRequest;
 import com.autostore.bff.application.service.user.dto.RegisterUserResponse;
 import jakarta.inject.Named;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Named
-public class UserClient implements UserGateway {
+@FeignClient(name = "user-client", url = "${feign.client.config.user-service.url}")
+public interface UserClient extends UserGateway {
 
     @Override
-    public AuthUserResponse authUser(AuthUserRequest request) {
-        // TODO
-        return null;
-    }
+    @PostMapping
+    AuthUserResponse authUser(AuthUserRequest request);
 
     @Override
-    public RegisterUserResponse registerUser(RegisterUserRequest request) {
-        // TODO
-        return null;
-    }
+    @PostMapping
+    RegisterUserResponse registerUser(RegisterUserRequest request);
 
 }

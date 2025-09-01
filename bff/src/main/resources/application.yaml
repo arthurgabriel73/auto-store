@@ -17,6 +17,12 @@ spring:
       database: admin
       uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27018}
 
+feign:
+  client:
+    config:
+      user-service:
+        url: ${USER_SERVICE_URL:http://localhost:3100/api/v1/user}
+
 logging:
   level:
     org:
