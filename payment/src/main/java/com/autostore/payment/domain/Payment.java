@@ -41,4 +41,8 @@ public class Payment {
         this.status = PaymentStatus.CANCELLED;
     }
 
+    public boolean isPending() {
+        return this.status == PaymentStatus.PENDING;
+    }
+
 }
