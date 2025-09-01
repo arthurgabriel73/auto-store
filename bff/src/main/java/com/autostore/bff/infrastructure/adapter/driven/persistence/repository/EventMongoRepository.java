@@ -1,7 +1,7 @@
-package com.autostore.bff.infrastructure.config.adapter.driven.persistence.repository;
+package com.autostore.bff.infrastructure.adapter.driven.persistence.repository;
 
 
-import com.autostore.bff.infrastructure.config.adapter.driven.persistence.schema.EventSchema;
+import com.autostore.bff.infrastructure.adapter.driven.persistence.schema.EventSchema;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

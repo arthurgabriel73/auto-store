@@ -1,4 +1,4 @@
-package com.autostore.bff.infrastructure.config.adapter.util;
+package com.autostore.bff.infrastructure.adapter.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

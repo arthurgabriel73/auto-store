@@ -1,10 +1,10 @@
-package com.autostore.bff.infrastructure.config.adapter.driven.persistence;
+package com.autostore.bff.infrastructure.adapter.driven.persistence;
 
 
 import com.autostore.bff.application.port.driven.EventRepository;
 import com.autostore.bff.domain.DomainEvent;
-import com.autostore.bff.infrastructure.config.adapter.driven.persistence.repository.EventMongoRepository;
-import com.autostore.bff.infrastructure.config.adapter.driven.persistence.schema.EventSchema;
+import com.autostore.bff.infrastructure.adapter.driven.persistence.repository.EventMongoRepository;
+import com.autostore.bff.infrastructure.adapter.driven.persistence.schema.EventSchema;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 

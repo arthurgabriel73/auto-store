@@ -1,4 +1,4 @@
-package com.autostore.bff.infrastructure.config.adapter.driven.persistence.schema;
+package com.autostore.bff.infrastructure.adapter.driven.persistence.schema;
 
 
 import com.autostore.bff.domain.DomainEvent;
