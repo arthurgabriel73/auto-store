@@ -1,4 +1,4 @@
-package com.autostore.bff.application.service.model.request;
+package com.autostore.bff.application.service.user.dto;
 
 
 import lombok.Builder;

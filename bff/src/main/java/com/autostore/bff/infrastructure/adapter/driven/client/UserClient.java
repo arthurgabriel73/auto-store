@@ -2,10 +2,10 @@ package com.autostore.bff.infrastructure.adapter.driven.client;
 
 
 import com.autostore.bff.application.port.driven.UserGateway;
-import com.autostore.bff.application.service.model.request.AuthUserRequest;
-import com.autostore.bff.application.service.model.request.RegisterUserRequest;
-import com.autostore.bff.application.service.model.response.AuthUserResponse;
-import com.autostore.bff.application.service.model.response.RegisterUserResponse;
+import com.autostore.bff.application.service.user.dto.AuthUserRequest;
+import com.autostore.bff.application.service.user.dto.AuthUserResponse;
+import com.autostore.bff.application.service.user.dto.RegisterUserRequest;
+import com.autostore.bff.application.service.user.dto.RegisterUserResponse;
 
 
 public class UserClient implements UserGateway {
