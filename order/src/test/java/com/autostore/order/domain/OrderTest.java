@@ -87,4 +87,16 @@ public class OrderTest {
         assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, customer));
     }
 
+    @Test
+    void testShouldThrowExceptionWhenCreateOrderWithNoCustomer() {
+        // Arrange
+        Product product = new Product("Product 1", 100.0);
+        List<OrderProducts> orderProducts = List.of(new OrderProducts(product, 2));
+        String transactionId = "txn123";
+
+        // Act & Assert
+        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, new OrderCustomer(null)));
+        assertThrows(BusinessException.class, () -> Order.create(orderProducts, transactionId, new OrderCustomer("")));
+    }
+
 }
