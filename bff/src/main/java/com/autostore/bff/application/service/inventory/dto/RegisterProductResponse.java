@@ -1,6 +1,11 @@
 package com.autostore.bff.application.service.inventory.dto;
 
 
-public class RegisterProductResponse {
+public record RegisterProductResponse(
+        Long productId,
+        String productCode,
+        Double unitValue,
+        String category
+) {
 
 }
