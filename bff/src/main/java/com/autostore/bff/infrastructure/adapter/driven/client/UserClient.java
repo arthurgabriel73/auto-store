@@ -6,8 +6,10 @@ import com.autostore.bff.application.service.user.dto.AuthUserRequest;
 import com.autostore.bff.application.service.user.dto.AuthUserResponse;
 import com.autostore.bff.application.service.user.dto.RegisterUserRequest;
 import com.autostore.bff.application.service.user.dto.RegisterUserResponse;
+import jakarta.inject.Named;
 
 
+@Named
 public class UserClient implements UserGateway {
 
     @Override

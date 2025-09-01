@@ -3,8 +3,10 @@ package com.autostore.bff.infrastructure.adapter.driven.client;
 
 import com.autostore.bff.application.port.driven.InventoryGateway;
 import com.autostore.bff.application.service.inventory.dto.*;
+import jakarta.inject.Named;
 
 
+@Named
 public class InventoryClient implements InventoryGateway {
 
     @Override
