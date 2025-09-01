@@ -50,8 +50,7 @@ public class InMemoryPaymentRepository implements PaymentRepository {
     }
 
     private boolean isSamePayment(Payment a, Payment b) {
-        return a.getOrderId().equals(b.getOrderId()) &&
-                a.getTransactionId().equals(b.getTransactionId());
+        return a.getId().equals(b.getId());
     }
 
 }
