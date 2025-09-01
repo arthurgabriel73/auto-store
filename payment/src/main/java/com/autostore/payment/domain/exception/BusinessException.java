@@ -1,4 +1,4 @@
-package com.autostore.payment.domain.exceptions;
+package com.autostore.payment.domain.exception;
 
 
 public class BusinessException extends RuntimeException {

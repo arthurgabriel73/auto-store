@@ -1,7 +1,7 @@
 package com.autostore.payment.domain;
 
 
-import com.autostore.payment.domain.exceptions.BusinessException;
+import com.autostore.payment.domain.exception.BusinessException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

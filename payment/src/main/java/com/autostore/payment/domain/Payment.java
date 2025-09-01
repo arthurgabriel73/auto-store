@@ -1,7 +1,7 @@
 package com.autostore.payment.domain;
 
 
-import com.autostore.payment.domain.exceptions.BusinessException;
+import com.autostore.payment.domain.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
