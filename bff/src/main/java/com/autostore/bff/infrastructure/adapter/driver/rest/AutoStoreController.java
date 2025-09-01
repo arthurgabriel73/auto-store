@@ -39,7 +39,7 @@ public class AutoStoreController {
     }
 
     @PostMapping("/register-product")
-    public ResponseEntity<RegisterProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
+    public ResponseEntity<ProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
         return new ResponseEntity<>(inventoryService.registerProduct(request), HttpStatus.CREATED);
     }
 

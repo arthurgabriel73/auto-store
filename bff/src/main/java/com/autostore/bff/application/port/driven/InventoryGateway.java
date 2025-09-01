@@ -6,7 +6,7 @@ import com.autostore.bff.application.service.inventory.dto.*;
 
 public interface InventoryGateway {
 
-    RegisterProductResponse registerProduct(RegisterProductRequest request);
+    ProductResponse registerProduct(RegisterProductRequest request);
 
     void addProductStock(AddProductStockRequest request);
 

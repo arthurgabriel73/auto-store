@@ -11,7 +11,7 @@ public class InventoryService {
 
     private final InventoryGateway inventoryGateway;
 
-    public RegisterProductResponse registerProduct(RegisterProductRequest request) {
+    public ProductResponse registerProduct(RegisterProductRequest request) {
         return inventoryGateway.registerProduct(request);
     }
 

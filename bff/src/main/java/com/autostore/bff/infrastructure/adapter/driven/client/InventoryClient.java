@@ -16,7 +16,7 @@ public interface InventoryClient extends InventoryGateway {
 
     @Override
     @PostMapping("/product")
-    RegisterProductResponse registerProduct(RegisterProductRequest request);
+    ProductResponse registerProduct(RegisterProductRequest request);
 
     @Override
     @PostMapping("/product/stock")
