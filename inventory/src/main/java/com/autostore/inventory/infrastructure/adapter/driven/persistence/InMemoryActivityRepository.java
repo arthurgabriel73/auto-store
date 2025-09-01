@@ -15,9 +15,10 @@ public class InMemoryActivityRepository implements ActivityRepository {
 
     @Override
     public Activity save(Activity activity) {
-        Activity newActivity = toNewInstance(activity);
-        activities.add(newActivity);
-        return toNewInstance(newActivity);
+        Activity toSave = toNewInstance(activity);
+        activities.removeIf(a -> isSameActivity(a, toSave));
+        activities.add(toSave);
+        return toNewInstance(toSave);
     }
 
     @Override
@@ -49,6 +50,10 @@ public class InMemoryActivityRepository implements ActivityRepository {
                 .createdAt(activity.createdAt())
                 .updatedAt(activity.updatedAt())
                 .build();
+    }
+
+    private boolean isSameActivity(Activity a, Activity b) {
+        return a.id().equals(b.id());
     }
 
 }
