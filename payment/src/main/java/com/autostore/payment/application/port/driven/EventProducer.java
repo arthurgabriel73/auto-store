@@ -1,7 +1,7 @@
 package com.autostore.payment.application.port.driven;
 
 
-import com.autostore.payment.domain.event.DomainEvent;
+import com.autostore.payment.domain.DomainEvent;
 
 
 public interface EventProducer {

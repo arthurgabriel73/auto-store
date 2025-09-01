@@ -1,4 +1,4 @@
-package com.autostore.payment.domain.event;
+package com.autostore.payment.domain;
 
 
 import lombok.AllArgsConstructor;

@@ -1,6 +1,7 @@
-package com.autostore.payment.domain.event;
+package com.autostore.payment.application.port.event;
 
 
+import com.autostore.payment.domain.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
