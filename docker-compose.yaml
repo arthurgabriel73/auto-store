@@ -127,6 +127,7 @@ services:
       - KAFKA_BROKER=kafka:29092
       - MONGO_DB_URI=mongodb://admin:123456@bff-outbox-db:27017
       - USER_SERVICE_URL=http://user-service:3100/api/v1/user
+      - VALIDATION_SERVICE_URL=http://validation-service:3300/api/v1/validation
       - INVENTORY_SERVICE_URL=http://inventory-service:3500/api/v1/inventory
       - ORDER_SERVICE_URL=http://order-service:3200/api/v1/order
     ports:

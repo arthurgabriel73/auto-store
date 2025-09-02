@@ -7,6 +7,7 @@ import com.autostore.bff.application.service.OrderOrchestratorService;
 import com.autostore.bff.application.service.SagaExecutionController;
 import com.autostore.bff.application.service.inventory.InventoryService;
 import com.autostore.bff.application.service.order.OrderService;
+import com.autostore.bff.application.service.order.ValidationService;
 import com.autostore.bff.application.service.user.UserService;
 import com.autostore.bff.domain.order.Order;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,11 @@ public class ServiceBeanConfiguration {
     @Bean
     public InventoryService inventoryService(InventoryGateway inventoryGateway) {
         return new InventoryService(inventoryGateway);
+    }
+
+    @Bean
+    public ValidationService validationService(ValidationGateway validationGateway) {
+        return new ValidationService(validationGateway);
     }
 
     @Bean

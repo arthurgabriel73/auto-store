@@ -4,8 +4,10 @@ package com.autostore.bff.infrastructure.adapter.driver.rest;
 import com.autostore.bff.application.service.inventory.InventoryService;
 import com.autostore.bff.application.service.inventory.dto.*;
 import com.autostore.bff.application.service.order.OrderService;
+import com.autostore.bff.application.service.order.ValidationService;
 import com.autostore.bff.application.service.order.dto.CreateOrderRequest;
 import com.autostore.bff.application.service.order.dto.CreateOrderResponse;
+import com.autostore.bff.application.service.order.dto.RegisterProductValidationRequest;
 import com.autostore.bff.application.service.user.UserService;
 import com.autostore.bff.application.service.user.dto.AuthUserRequest;
 import com.autostore.bff.application.service.user.dto.AuthUserResponse;
@@ -30,6 +32,7 @@ public class AutoStoreController {
     private final UserService userService;
     private final InventoryService inventoryService;
     private final OrderService orderService;
+    private final ValidationService validationService;
 
     @PostMapping("/auth")
     @Tag(name = "Customer")
@@ -101,6 +104,16 @@ public class AutoStoreController {
             @RequestBody CreateOrderRequest request) {
         // TODO: Get customer from auth token provided in the request header
         return new ResponseEntity<>(orderService.createOrder(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register-product-validation")
+    @Tag(name = "Validation")
+    public ResponseEntity<Void> registerProductValidation(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = @ExampleObject(value
+                    = REGISTER_PRODUCT_VALIDATION)))
+            @RequestBody RegisterProductValidationRequest request) {
+        validationService.registerProductValidation(request);
+        return ResponseEntity.accepted().build();
     }
 
 }
