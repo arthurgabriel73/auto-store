@@ -1,6 +1,7 @@
 package com.autostore.user.infrastructure.adapter.util;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +24,13 @@ public class JsonUtil {
         }
     }
 
-    public <T> T fromJson(String json, Class<T> clazz) {
+    public <T> T fromJson(String json, TypeReference<T> typeReference) {
         try {
-            return objectMapper.readValue(json, clazz);
+            return objectMapper.readValue(json, typeReference);
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
             return null;
         }
-    }
-
-    public Object fromJson(String json) {
-        return fromJson(json, Object.class);
     }
 
 }

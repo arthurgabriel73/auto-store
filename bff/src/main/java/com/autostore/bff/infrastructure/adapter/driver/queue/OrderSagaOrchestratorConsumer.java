@@ -6,6 +6,7 @@ import com.autostore.bff.domain.DomainEvent;
 import com.autostore.bff.domain.Topic;
 import com.autostore.bff.domain.order.Order;
 import com.autostore.bff.infrastructure.adapter.util.JsonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -28,7 +29,8 @@ public class OrderSagaOrchestratorConsumer {
     )
     public void consumeOrderSagaEvent(String payload, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
         log.info("Receiving event from topic {}: {}", topic, payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, new TypeReference<DomainEvent<Order>>() {
+        });
         orderOrchestratorServiceDriverPort.consumeOrderSagaEvent(event, Topic.fromString(topic));
     }
 

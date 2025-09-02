@@ -6,6 +6,7 @@ import com.autostore.validation.application.port.driver.model.command.ValidatePr
 import com.autostore.validation.application.port.event.Order;
 import com.autostore.validation.domain.DomainEvent;
 import com.autostore.validation.infrastructure.adapter.util.JsonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -26,7 +27,8 @@ public class KafkaConsumer {
     )
     public void consumeValidateOrderCommand(String payload) {
         log.info("Receiving event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, new TypeReference<DomainEvent<Order>>() {
+        });
         validateProductsDriverPort.execute(new ValidateProductsCommand(event));
     }
 
@@ -36,7 +38,8 @@ public class KafkaConsumer {
     )
     public void consumeRollbackOrderValidationCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, new TypeReference<DomainEvent<Order>>() {
+        });
         validateProductsDriverPort.rollback(event);
     }
 
