@@ -1,0 +1,33 @@
+{
+  "order1": {
+    "customer": "905.169.880-18",
+    "products": [
+      {
+        "product": {
+          "code": "ABC-1234",
+          "unitValue": 50000.00
+        },
+        "quantity": 1
+      }
+    ]
+  },
+  "order2": {
+    "customer": "294.098.090-02",
+    "products": [
+      {
+        "product": {
+          "code": "XYZ-5678",
+          "unitValue": 98000.00
+        },
+        "quantity": 1
+      },
+      {
+        "product": {
+          "code": "LMN-9101",
+          "unitValue": 150000.00
+        },
+        "quantity": 1
+      }
+    ]
+  }
+}

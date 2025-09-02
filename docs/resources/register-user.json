@@ -1,0 +1,44 @@
+{
+  "user1": {
+    "firstName": "Carlos",
+    "lastName": "Silva",
+    "cpf": "905.169.880-18",
+    "email": "carlos.silva@email.com",
+    "street": "Avenida Brasil",
+    "number": "1500",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP",
+    "zipCode": "01000-000",
+    "complement": "Apartamento 101",
+    "country": "Brasil"
+  },
+  "user2": {
+    "firstName": "Ana",
+    "lastName": "Santos",
+    "cpf": "294.098.090-02",
+    "email": "ana.santos@empresa.com.br",
+    "street": "Rua das Flores",
+    "number": "45",
+    "neighborhood": "Jardim Botânico",
+    "city": "Curitiba",
+    "state": "PR",
+    "zipCode": "80000-000",
+    "complement": "Bloco B",
+    "country": "Brasil"
+  },
+  "user3": {
+    "firstName": "João",
+    "lastName": "Oliveira",
+    "cpf": "161.866.510-37",
+    "email": "joao.oliveira@outlook.com",
+    "street": "Praça da Sé",
+    "number": "100",
+    "neighborhood": "Sé",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "zipCode": "20000-000",
+    "complement": "Sala 205",
+    "country": "Brasil"
+  }
+}
