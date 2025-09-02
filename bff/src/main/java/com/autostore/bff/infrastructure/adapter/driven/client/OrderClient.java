@@ -5,14 +5,16 @@ import com.autostore.bff.application.port.driven.OrderGateway;
 import com.autostore.bff.application.service.order.dto.CreateOrderRequest;
 import com.autostore.bff.application.service.order.dto.CreateOrderResponse;
 import jakarta.inject.Named;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Named
-public class OrderClient implements OrderGateway {
+@FeignClient(name = "order-client", url = "${feign.client.config.order-service.url}")
+public interface OrderClient extends OrderGateway {
 
     @Override
-    public CreateOrderResponse createOrder(CreateOrderRequest request) {
-        return null;
-    }
+    @PostMapping
+    CreateOrderResponse createOrder(CreateOrderRequest request);
 
 }

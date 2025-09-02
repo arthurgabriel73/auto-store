@@ -6,6 +6,6 @@ import com.autostore.order.domain.OrderProducts;
 import java.util.List;
 
 
-public record CreateOrderCommand(List<OrderProducts> products, String customerId) {
+public record CreateOrderCommand(List<OrderProducts> products, String customer) {
 
 }

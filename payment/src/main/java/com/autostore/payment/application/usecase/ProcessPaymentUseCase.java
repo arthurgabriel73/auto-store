@@ -7,8 +7,9 @@ import com.autostore.payment.application.port.driven.EventProducer;
 import com.autostore.payment.application.port.driven.PaymentRepository;
 import com.autostore.payment.application.port.driver.ProcessPaymentDriverPort;
 import com.autostore.payment.application.port.driver.model.command.ProcessPaymentCommand;
-import com.autostore.payment.application.port.event.OrderEvent;
+import com.autostore.payment.application.port.event.Order;
 import com.autostore.payment.application.port.event.Topic;
+import com.autostore.payment.domain.DomainEvent;
 import com.autostore.payment.domain.Payment;
 import com.autostore.payment.domain.PaymentStatus;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class ProcessPaymentUseCase implements ProcessPaymentDriverPort {
         }
     }
 
-    private void requirePaymentNotDuplicated(OrderEvent event) {
+    private void requirePaymentNotDuplicated(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         var payment = paymentRepository.findByOrderIdAndTransactionId(orderId, transactionId);
@@ -46,7 +47,7 @@ public class ProcessPaymentUseCase implements ProcessPaymentDriverPort {
             throw new ValidationException("There's another PENDING payment for this order.");
     }
 
-    private Payment registerPendingPayment(OrderEvent event) {
+    private Payment registerPendingPayment(DomainEvent<Order> event) {
         var now = LocalDateTime.now();
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
@@ -73,7 +74,7 @@ public class ProcessPaymentUseCase implements ProcessPaymentDriverPort {
     }
 
     @Override
-    public void rollback(OrderEvent event) {
+    public void rollback(DomainEvent<Order> event) {
         try {
             refundPayment(event);
             eventProducer.sendEvent(event, Topic.PAYMENT_SERVICE_PAYMENT_REFUND_SUCCESS_V1.getTopic());
@@ -83,7 +84,7 @@ public class ProcessPaymentUseCase implements ProcessPaymentDriverPort {
         }
     }
 
-    private void refundPayment(OrderEvent event) {
+    private void refundPayment(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         paymentRepository.findByOrderIdAndTransactionId(orderId, transactionId).ifPresentOrElse(

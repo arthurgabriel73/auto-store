@@ -24,6 +24,10 @@ feign:
         url: ${USER_SERVICE_URL:http://localhost:3100/api/v1/user}
       inventory-service:
         url: ${INVENTORY_SERVICE_URL:http://localhost:3500/api/v1/inventory}
+      validation-service:
+        url: ${VALIDATION_SERVICE_URL:http://localhost:3300/api/v1/validation}
+      order-service:
+        url: ${ORDER_SERVICE_URL:http://localhost:3200/api/v1/order}
 
 logging:
   level:

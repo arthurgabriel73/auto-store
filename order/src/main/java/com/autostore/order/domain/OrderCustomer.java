@@ -8,19 +8,19 @@ import lombok.Getter;
 @Getter
 public class OrderCustomer {
 
-    private final String customerId;
+    private final String customer;
 
-    private OrderCustomer(String customerId) {
-        validateCustomerId(customerId);
-        this.customerId = customerId;
+    private OrderCustomer(String customer) {
+        validateCustomer(customer);
+        this.customer = customer;
     }
 
-    public static OrderCustomer of(String customerId) {
-        return new OrderCustomer(customerId);
+    public static OrderCustomer of(String customer) {
+        return new OrderCustomer(customer);
     }
 
-    private void validateCustomerId(String customerId) {
-        if (customerId == null || customerId.isBlank())
+    private void validateCustomer(String customer) {
+        if (customer == null || customer.isBlank())
             throw new BusinessException("Cannot create order without customer.");
     }
 

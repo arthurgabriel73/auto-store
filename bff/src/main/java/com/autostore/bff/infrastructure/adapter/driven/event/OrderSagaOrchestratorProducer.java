@@ -1,11 +1,11 @@
-package com.autostore.order.infrastructure.adapter.driven.event;
+package com.autostore.bff.infrastructure.adapter.driven.event;
 
 
-import com.autostore.order.application.port.driven.EventProducer;
-import com.autostore.order.domain.DomainEvent;
-import com.autostore.order.domain.Order;
-import com.autostore.order.infrastructure.adapter.util.JsonUtil;
-import lombok.RequiredArgsConstructor;
+import com.autostore.bff.application.port.driven.EventProducer;
+import com.autostore.bff.domain.DomainEvent;
+import com.autostore.bff.domain.order.Order;
+import com.autostore.bff.infrastructure.adapter.util.JsonUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -13,14 +13,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public class KafkaProducer implements EventProducer {
+@AllArgsConstructor
+public class OrderSagaOrchestratorProducer implements EventProducer<Order> {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final JsonUtil jsonUtil;
 
 
-    @Override
     public void sendEvent(DomainEvent<Order> event, String topic) {
         String payload = jsonUtil.toJson(event);
         try {

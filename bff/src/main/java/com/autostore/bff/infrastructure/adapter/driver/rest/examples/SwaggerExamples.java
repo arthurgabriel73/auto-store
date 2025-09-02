@@ -84,4 +84,10 @@ public class SwaggerExamples {
             }
             """;
 
+    public static final String REGISTER_PRODUCT_VALIDATION = """
+                {
+                  "code": "MYW-6552"
+                }
+            """;
+
 }

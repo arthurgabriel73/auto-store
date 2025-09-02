@@ -18,9 +18,8 @@ public class EventRepositoryAdapter<T> implements EventRepository<T> {
     private final EventMongoRepository<T> repository;
 
     @Override
-    public DomainEvent<T> save(DomainEvent<T> event) {
-        EventSchema<T> eventSchema = EventSchema.fromDomain(event);
-        return repository.save(eventSchema).toDomain();
+    public void save(DomainEvent<T> event) {
+        repository.save(EventSchema.fromDomain(event)).toDomain();
     }
 
     @Override

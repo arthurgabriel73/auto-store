@@ -48,7 +48,7 @@ public class CreateOrderUseCaseTest {
         assertNotNull(output);
         assertNotNull(output.order());
         assertNotNull(output.order().getId());
-        assertEquals(command.customerId(), output.order().getCustomer().getCustomerId());
+        assertEquals(command.customer(), output.order().getCustomer().getCustomer());
         assertEquals(2, output.order().getProducts().size());
         assertEquals(1_007_000.50, output.order().getTotalAmount());
         assertEquals(2, output.order().getTotalItems());
