@@ -3,6 +3,7 @@ package com.autostore.bff.infrastructure.adapter.driven.event;
 
 import com.autostore.bff.application.port.driven.EventProducer;
 import com.autostore.bff.domain.DomainEvent;
+import com.autostore.bff.domain.order.Order;
 import com.autostore.bff.infrastructure.adapter.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class SagaOrchestratorProducer implements EventProducer {
+public class OrderSagaOrchestratorProducer implements EventProducer<Order> {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final JsonUtil jsonUtil;
 
 
-    public void sendEvent(DomainEvent<?> event, String topic) {
+    public void sendEvent(DomainEvent<Order> event, String topic) {
         String payload = jsonUtil.toJson(event);
         try {
             log.info("Sending event to topic {} with data: {}", topic, payload);

@@ -1,16 +1,14 @@
 package com.autostore.bff.infrastructure.config.ioc;
 
 
-import com.autostore.bff.application.port.driven.EventProducer;
-import com.autostore.bff.application.port.driven.InventoryGateway;
-import com.autostore.bff.application.port.driven.OrderGateway;
-import com.autostore.bff.application.port.driven.UserGateway;
-import com.autostore.bff.application.port.driver.OrchestratorServiceDriverPort;
-import com.autostore.bff.application.service.OrchestratorService;
+import com.autostore.bff.application.port.driven.*;
+import com.autostore.bff.application.port.driver.OrderOrchestratorServiceDriverPort;
+import com.autostore.bff.application.service.OrderOrchestratorService;
 import com.autostore.bff.application.service.SagaExecutionController;
 import com.autostore.bff.application.service.inventory.InventoryService;
 import com.autostore.bff.application.service.order.OrderService;
 import com.autostore.bff.application.service.user.UserService;
+import com.autostore.bff.domain.order.Order;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,10 +32,11 @@ public class ServiceBeanConfiguration {
     }
 
     @Bean
-    OrchestratorServiceDriverPort orchestratorServiceDriverPort(
-            EventProducer eventProducer
+    OrderOrchestratorServiceDriverPort orchestratorServiceDriverPort(
+            EventRepository<Order> eventRepository,
+            EventProducer<Order> eventProducer
     ) {
-        return new OrchestratorService(new SagaExecutionController(), eventProducer);
+        return new OrderOrchestratorService(new SagaExecutionController(), eventRepository, eventProducer);
     }
 
 }
