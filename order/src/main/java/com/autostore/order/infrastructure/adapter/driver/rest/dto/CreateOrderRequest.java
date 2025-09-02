@@ -16,10 +16,10 @@ import java.util.List;
 public class CreateOrderRequest {
 
     private List<OrderProducts> products;
-    private String customerId;
+    private String customer;
 
     public CreateOrderCommand toCommand() {
-        return new CreateOrderCommand(products, customerId);
+        return new CreateOrderCommand(products, customer);
     }
 
 }

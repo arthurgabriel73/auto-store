@@ -15,6 +15,6 @@ import java.util.List;
 public class CreateOrderRequest {
 
     private List<OrderProducts> products;
-    private String customerId;
+    private String customer;
 
 }

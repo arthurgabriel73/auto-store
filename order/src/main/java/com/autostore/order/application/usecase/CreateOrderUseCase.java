@@ -24,11 +24,11 @@ public class CreateOrderUseCase implements CreateOrderDriverPort {
     public CreateOrderCommandOutput execute(CreateOrderCommand command) {
         var newTransactionId = TransactionId.generate().value();
         var products = command.products();
-        var customerId = OrderCustomer.of(command.customerId());
+        var customer = OrderCustomer.of(command.customer());
         Order orderToCreate = Order.create(
                 products,
                 newTransactionId,
-                customerId
+                customer
         );
         Order createdOrder = orderRepository.save(orderToCreate);
         eventProducer.sendEvent(createOrderEvent(createdOrder), Topic.ORDER_SERVICE_ORDER_CREATED_V1.getTopic());

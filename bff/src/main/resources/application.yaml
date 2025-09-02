@@ -15,7 +15,7 @@ spring:
   data:
     mongodb:
       database: admin
-      uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27018}
+      uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017}
 
 feign:
   client:
@@ -24,6 +24,8 @@ feign:
         url: ${USER_SERVICE_URL:http://localhost:3100/api/v1/user}
       inventory-service:
         url: ${INVENTORY_SERVICE_URL:http://localhost:3500/api/v1/inventory}
+      order-service:
+        url: ${ORDER_SERVICE_URL:http://localhost:3200/api/v1/order}
 
 logging:
   level:
