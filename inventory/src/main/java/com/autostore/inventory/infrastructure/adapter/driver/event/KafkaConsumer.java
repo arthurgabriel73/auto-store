@@ -26,7 +26,7 @@ public class KafkaConsumer {
     )
     public void consumeUpdateInventoryCommand(String payload) {
         log.info("Receiving event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
         updateInventoryDriverPort.execute(new UpdateInventoryCommand(event));
     }
 
@@ -36,7 +36,7 @@ public class KafkaConsumer {
     )
     public void consumeRollbackInventoryUpdateCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
         updateInventoryDriverPort.rollback(event);
     }
 

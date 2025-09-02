@@ -26,7 +26,7 @@ public class KafkaConsumer {
     )
     public void consumeProcessPaymentCommand(String payload) {
         log.info("Receiving event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
         processPaymentDriverPort.execute(new ProcessPaymentCommand(event));
     }
 
@@ -36,7 +36,7 @@ public class KafkaConsumer {
     )
     public void consumeRefundPaymentCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(payload, DomainEvent.class);
         processPaymentDriverPort.rollback(event);
     }
 
