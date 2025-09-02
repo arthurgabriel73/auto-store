@@ -9,8 +9,8 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
     command-topics:
-      process-payment: process-payment
-      refund-payment: refund-payment
+      process-payment-command: process-payment-command
+      refund-payment-command: refund-payment-command
     consumer:
       group-id: payment-group
       auto-offset-reset: latest

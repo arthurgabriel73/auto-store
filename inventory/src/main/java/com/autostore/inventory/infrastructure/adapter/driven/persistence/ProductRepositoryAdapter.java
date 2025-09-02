@@ -8,6 +8,9 @@ import com.autostore.inventory.infrastructure.adapter.driven.persistence.reposit
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Named
 @RequiredArgsConstructor
@@ -23,6 +26,20 @@ public class ProductRepositoryAdapter implements ProductRepository {
     @Override
     public Boolean existsByCode(String code) {
         return repository.existsByCode(code);
+    }
+
+    @Override
+    public Optional<Product> findByCode(String code) {
+        var product = repository.findByCode(code);
+        if (product.isEmpty()) return Optional.empty();
+        return product.map(ProductDatabaseEntity::toDomain);
+    }
+
+    @Override
+    public List<Product> findAllAvailableProducts() {
+        return repository.findAllAvailableProducts().stream()
+                .map(ProductDatabaseEntity::toDomain)
+                .toList();
     }
 
 }

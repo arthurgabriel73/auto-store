@@ -21,7 +21,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.process-payment}"
+            topics = "${spring.kafka.command-topics.process-payment-command}"
     )
     public void consumeProcessPaymentCommand(String payload) {
         log.info("Receiving event {}", payload);
@@ -31,7 +31,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.refund-payment}"
+            topics = "${spring.kafka.command-topics.refund-payment-command}"
     )
     public void consumeRefundPaymentCommand(String payload) {
         log.info("Received rollback event {}", payload);

@@ -21,7 +21,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.validate-order}"
+            topics = "${spring.kafka.command-topics.validate-order-command}"
     )
     public void consumeValidateOrderCommand(String payload) {
         log.info("Receiving event {}", payload);
@@ -31,7 +31,7 @@ public class KafkaConsumer {
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
-            topics = "${spring.kafka.command-topics.rollback-order-validation}"
+            topics = "${spring.kafka.command-topics.rollback-order-validation-command}"
     )
     public void consumeRollbackOrderValidationCommand(String payload) {
         log.info("Received rollback event {}", payload);
