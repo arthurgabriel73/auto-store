@@ -31,7 +31,8 @@ public class RegisterUserUseCase implements RegisterUserDriverPort {
     }
 
     private void requireCpfNotRegistered(Cpf cpf) {
-        if (userRepository.existsByCpf(cpf)) throw new CpfAlreadyRegisteredException(cpf.value());
+        if (userRepository.existsByCpf(cpf))
+            throw new CpfAlreadyRegisteredException("Cpf already registered: " + cpf.value());
     }
 
     private void requireEmailNotRegistered(Email email) {
