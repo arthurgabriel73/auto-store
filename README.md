@@ -88,21 +88,27 @@ caso < 80%.
 
 ## Executing the project
 
-Para a execução local do projeto, é necessário ter o Docker e o Docker Compose instalados na máquina, e executar o
-comando:
-
-```bash
-docker-compose up -d --build
-```
-
-ou utilize o Makefile:
+O comando abaixo irá realizar o build de todos os microsserviços, criar as imagens Docker e iniciar os
+contêineres utilizando o docker-compose:
 
 ```bash
 make setup
 ```
 
-Este repositório inclui um script `build.py` que automatiza o processo de build dos microsserviços e a execução do
-`docker-compose`.
+###
+
+Depois utilize o `make down` para parar e remover os contêineres, redes e volumes criados.
+
+Ou `make clean` para remover as builds dos microsserviços
+
+Caso deseje executar manualmente, pode fazer o build utilizando o script `build.py` e depois iniciar os contêineres
+com o comando:
+
+```bash
+docker-compose up -d --build
+```
+
+###
 
 ### Accessing the API
 
