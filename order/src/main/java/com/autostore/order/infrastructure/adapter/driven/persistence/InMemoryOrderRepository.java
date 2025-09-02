@@ -23,6 +23,11 @@ public class InMemoryOrderRepository implements OrderRepository {
         return toNewInstance(toSave);
     }
 
+    @Override
+    public List<Order> findAllByIds(List<String> orderIds) {
+        return List.of();
+    }
+
     private Order toNewInstance(Order order) {
         return Order.of(
                 order.getId() != null ? order.getId() : faker.idNumber().valid(),

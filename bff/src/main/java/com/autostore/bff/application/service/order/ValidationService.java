@@ -5,6 +5,8 @@ import com.autostore.bff.application.port.driven.ValidationGateway;
 import com.autostore.bff.application.service.order.dto.RegisterProductValidationRequest;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 public class ValidationService {
@@ -13,6 +15,10 @@ public class ValidationService {
 
     public void registerProductValidation(RegisterProductValidationRequest request) {
         validationGateway.registerProductValidation(request);
+    }
+
+    public List<String> listSuccessOrdersIds() {
+        return validationGateway.listSuccessfulOrdersIds();
     }
 
 }

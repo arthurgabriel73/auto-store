@@ -34,6 +34,11 @@ public class InMemoryValidationRepository implements ValidationRepository {
                 .map(this::toNewInstance);
     }
 
+    @Override
+    public List<String> listSuccessfulOrdersIds() {
+        return List.of();
+    }
+
     private Validation toNewInstance(Validation validation) {
         return Validation
                 .builder()
