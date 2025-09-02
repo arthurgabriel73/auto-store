@@ -41,10 +41,11 @@ public class AutoStoreController {
     @PostMapping("/auth")
     @Tag(name = "Customer")
     public ResponseEntity<AuthUserResponse> auth(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = @ExampleObject(value = AUTH_USER)))
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = @ExampleObject(value
+                    = AUTH_USER)))
             @RequestBody AuthUserRequest request
     ) {
-        return ResponseEntity.ok(userService.authUser(request));
+        return new ResponseEntity<>(userService.authUser(request), HttpStatus.CREATED);
     }
 
     @PostMapping("/register-customer")
@@ -106,7 +107,7 @@ public class AutoStoreController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = @ExampleObject(value
                     = CREATE_ORDER)))
             @RequestBody CreateOrderRequest request) {
-        var authToken = userService.authUser(AuthUserRequest.builder().cpf(request.getCustomer()).build());
+        var authToken = userService.authUser(new AuthUserRequest(request.getCustomer()));
         var authenticatedRequest = new CreateOrderRequest(request.getProducts(), authToken.accessToken());
         return new ResponseEntity<>(orderService.createOrder(authenticatedRequest), HttpStatus.CREATED);
     }
