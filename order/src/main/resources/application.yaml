@@ -16,6 +16,9 @@ spring:
     mongodb:
       database: admin
       uri: ${MONGO_DB_URI:mongodb://admin:123456@localhost:27017}
+jwt:
+  secret:
+    key: ${JWT_SECRET:my-secret-key}
 
 logging:
   level:

@@ -1,14 +1,6 @@
 package com.autostore.bff.application.service.user.dto;
 
 
-import lombok.Builder;
-import lombok.Data;
-
-
-@Data
-@Builder
-public class AuthUserRequest {
-
-    private String cpf;
+public record AuthUserRequest(String cpf) {
 
 }
