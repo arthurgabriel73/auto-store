@@ -27,7 +27,7 @@ public interface InventoryClient extends InventoryGateway {
     void updateProduct(UpdateProductRequest request);
 
     @Override
-    @GetMapping("/products/available")
+    @GetMapping("/available-products")
     ListAvailableProductsResponse listAvailableProducts();
 
     @Override
