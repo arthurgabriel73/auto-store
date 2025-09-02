@@ -17,8 +17,7 @@ que conseguimos graças ao controle de transações distribuídas utilizando o p
 
 * [Technology Stack](#technology-stack)
 * [Architecture](#architecture)
-* [Code Design](#system-design)
-* [Domain-Driven Design](#domain-driven-design)
+* [Code Design](#code-design)
 * [CI/CD](#cicd)
 * [Executing the project](#executing-the-project)
 * [API Documentation](#api-documentation)
@@ -70,11 +69,11 @@ práticas de Clean Code.
 * **Configuration**: Contém as classes de configuração da aplicação, como configuração de exceções, segurança,
   banco de dados, Kafka, etc.
 
-## Domain-Driven Design
-
-### Event Storming
-
 ## CI/CD
+
+O projeto utiliza GitHub Actions para integração contínua (CI). O pipeline de testes é
+acionado em cada push ou pull request para a branch main, porém a branch main está protegida para evitar
+commits diretos, garantindo que todas as alterações passem por revisão de código os testes automatizados.
 
 ## Executing the project
 
