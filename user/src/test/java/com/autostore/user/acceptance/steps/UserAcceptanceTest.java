@@ -7,6 +7,7 @@ import com.autostore.user.application.port.driver.model.query.FindUserByCpfQuery
 import com.autostore.user.domain.Cpf;
 import com.autostore.user.infrastructure.adapter.util.JsonUtil;
 import com.autostore.user.util.TestUserDataFactory;
+import com.fasterxml.jackson.core.type.TypeReference;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -72,7 +73,8 @@ public class UserAcceptanceTest extends BaseScenario {
     @Then("the response should contain the generated user id")
     public void the_response_should_contain_the_generated_user_id() {
         var responseBody = cucumberContextHolder.getResponse().getBody();
-        RegisterUserCommandOutput output = jsonUtil.fromJson(responseBody, RegisterUserCommandOutput.class);
+        RegisterUserCommandOutput output = jsonUtil.fromJson(responseBody, new TypeReference<RegisterUserCommandOutput>() {
+        });
         assertNotNull(output.getUserId());
         assertDoesNotThrow(() -> UUID.fromString(output.getUserId()));
     }
@@ -80,7 +82,8 @@ public class UserAcceptanceTest extends BaseScenario {
     @Then("the response should contain the user id, name, cpf matching {string}, email matching {string}")
     public void the_response_should_contain_the_user_id_name_cpf_email(String cpf, String email) {
         var responseBody = cucumberContextHolder.getResponse().getBody();
-        FindUserByCpfQueryOutput output = jsonUtil.fromJson(responseBody, FindUserByCpfQueryOutput.class);
+        FindUserByCpfQueryOutput output = jsonUtil.fromJson(responseBody, new TypeReference<FindUserByCpfQueryOutput>() {
+        });
         assertNotNull(output);
         assertNotNull(output.getId());
         assertNotNull(output.getName());
