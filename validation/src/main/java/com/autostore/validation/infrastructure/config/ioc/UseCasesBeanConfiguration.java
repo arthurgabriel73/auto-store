@@ -4,8 +4,10 @@ package com.autostore.validation.infrastructure.config.ioc;
 import com.autostore.validation.application.port.driven.EventProducer;
 import com.autostore.validation.application.port.driven.ValidationProductRepository;
 import com.autostore.validation.application.port.driven.ValidationRepository;
+import com.autostore.validation.application.port.driver.ListSuccessfulOrdersIdsDriverPort;
 import com.autostore.validation.application.port.driver.RegisterValidationProductDriverPort;
 import com.autostore.validation.application.port.driver.ValidateProductsDriverPort;
+import com.autostore.validation.application.usecase.ListSuccessfulOrdersIdsUseCase;
 import com.autostore.validation.application.usecase.RegisterValidationProductUseCase;
 import com.autostore.validation.application.usecase.ValidateProductsUseCase;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +35,11 @@ public class UseCasesBeanConfiguration {
                 validationProductRepository,
                 eventProducer
         );
+    }
+
+    @Bean
+    public ListSuccessfulOrdersIdsDriverPort listSuccessfulOrdersIdsDriverPort(ValidationRepository validationRepository) {
+        return new ListSuccessfulOrdersIdsUseCase(validationRepository);
     }
 
 }

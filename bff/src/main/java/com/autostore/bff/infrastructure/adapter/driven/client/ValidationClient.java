@@ -5,7 +5,10 @@ import com.autostore.bff.application.port.driven.ValidationGateway;
 import com.autostore.bff.application.service.order.dto.RegisterProductValidationRequest;
 import jakarta.inject.Named;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 @Named
@@ -15,5 +18,9 @@ public interface ValidationClient extends ValidationGateway {
     @Override
     @PostMapping("/register-product")
     void registerProductValidation(RegisterProductValidationRequest request);
+
+    @Override
+    @GetMapping("/successful-orders")
+    List<String> listSuccessfulOrdersIds();
 
 }

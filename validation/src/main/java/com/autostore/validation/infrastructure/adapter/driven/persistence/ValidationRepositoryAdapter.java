@@ -8,6 +8,7 @@ import com.autostore.validation.infrastructure.adapter.driven.persistence.reposi
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -32,6 +33,11 @@ public class ValidationRepositoryAdapter implements ValidationRepository {
         var entity = repository.findByOrderIdAndTransactionId(orderId, transactionId);
         if (entity.isEmpty()) return Optional.empty();
         return entity.map(ValidationDatabaseEntity::toDomain);
+    }
+
+    @Override
+    public List<String> listSuccessfulOrdersIds() {
+        return repository.findBySuccess(true);
     }
 
 }

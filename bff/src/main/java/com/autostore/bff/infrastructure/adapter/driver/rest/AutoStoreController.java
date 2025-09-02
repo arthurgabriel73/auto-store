@@ -24,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.autostore.bff.infrastructure.adapter.driver.rest.examples.SwaggerExamples.*;
 
 
@@ -87,7 +89,8 @@ public class AutoStoreController {
     @GetMapping("/sold-products")
     @Tag(name = "Product")
     public ResponseEntity<ListSoldProductsResponse> listSoldProducts() {
-        return ResponseEntity.ok(inventoryService.listSoldProducts());
+        List<String> successfulOrdersIds = validationService.listSuccessOrdersIds();
+        return new ResponseEntity<>(new ListSoldProductsResponse(orderService.listOrdersByIds(successfulOrdersIds)), HttpStatus.OK);
     }
 
     @PutMapping("/update-product")
