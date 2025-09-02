@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
                 @Tag(name = "Customer", description = "Customer operations and authentication"),
                 @Tag(name = "Product", description = "Product inventory and details"),
                 @Tag(name = "Validation", description = "Validate a product to be sold"),
-                @Tag(name = "Order", description = "Order creation and tracking")
+                @Tag(name = "Order", description = "Order creation and tracking"),
+                @Tag(name = "Events", description = "Event tracking")
         }
 )
 public class OpenApiConfig {

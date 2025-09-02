@@ -1,6 +1,7 @@
 package com.autostore.bff.infrastructure.adapter.driver.rest;
 
 
+import com.autostore.bff.application.port.driven.EventRepository;
 import com.autostore.bff.application.service.inventory.InventoryService;
 import com.autostore.bff.application.service.inventory.dto.*;
 import com.autostore.bff.application.service.order.OrderService;
@@ -13,6 +14,8 @@ import com.autostore.bff.application.service.user.dto.AuthUserRequest;
 import com.autostore.bff.application.service.user.dto.AuthUserResponse;
 import com.autostore.bff.application.service.user.dto.RegisterUserRequest;
 import com.autostore.bff.application.service.user.dto.RegisterUserResponse;
+import com.autostore.bff.domain.DomainEvent;
+import com.autostore.bff.domain.order.Order;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +36,7 @@ public class AutoStoreController {
     private final InventoryService inventoryService;
     private final OrderService orderService;
     private final ValidationService validationService;
+    private final EventRepository<Order> eventRepository; // Just to display event history;
 
     @PostMapping("/auth")
     @Tag(name = "Customer")
@@ -114,6 +118,13 @@ public class AutoStoreController {
             @RequestBody RegisterProductValidationRequest request) {
         validationService.registerProductValidation(request);
         return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/events/order/history/{transactionId}")
+    @Tag(name = "Events")
+    public ResponseEntity<DomainEvent<Order>> getOrderEventHistory(@PathVariable String transactionId) {
+        var eventHistory = eventRepository.findTop1ByTransactionIdOrderByCreatedAtDesc(transactionId);
+        return eventHistory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
     }
 
 }
