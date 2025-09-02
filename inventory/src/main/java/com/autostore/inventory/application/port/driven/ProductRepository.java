@@ -3,6 +3,7 @@ package com.autostore.inventory.application.port.driven;
 
 import com.autostore.inventory.domain.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -13,5 +14,7 @@ public interface ProductRepository {
     Boolean existsByCode(String code);
 
     Optional<Product> findByCode(String code);
+
+    List<Product> findAllAvailableProducts();
 
 }

@@ -32,6 +32,12 @@ public class InMemoryProductRepository implements ProductRepository {
         return products.stream().filter(product -> product.getCode().equals(code)).findFirst();
     }
 
+    @Override
+    public List<Product> findAllAvailableProducts() {
+        // TODO
+        return List.of();
+    }
+
     private Product toNewInstance(Product product) {
         return Product
                 .builder()
