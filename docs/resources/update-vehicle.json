@@ -1,0 +1,47 @@
+{
+  "vehicle1": {
+    "code": "ABC-1234",
+    "unitValue": 55000.00,
+    "category": "VEHICLE",
+    "details": {
+      "plate": "ABC-1234",
+      "make": "FIAT",
+      "model": "Argo",
+      "version": "1.0 Flex Drive",
+      "yearFabrication": "2022",
+      "yearModel": "2023",
+      "kilometers": "35500",
+      "color": "Branco"
+    }
+  },
+  "vehicle2": {
+    "code": "XYZ-5678",
+    "unitValue": 100000.00,
+    "category": "VEHICLE",
+    "details": {
+      "plate": "XYZ-5678",
+      "make": "FORD",
+      "model": "Ka",
+      "version": "1.0 SE Plus TiVCT Flex 5p",
+      "yearFabrication": "2021",
+      "yearModel": "2021",
+      "kilometers": "40000",
+      "color": "Prata"
+    }
+  },
+  "vehicle3": {
+    "code": "LMN-9101",
+    "unitValue": 172000.00,
+    "category": "VEHICLE",
+    "details": {
+      "plate": "LMN-9101",
+      "make": "TOYOTA",
+      "model": "Corolla",
+      "version": "XEi 2.0 Flex 16V Aut.",
+      "yearFabrication": "2020",
+      "yearModel": "2020",
+      "kilometers": "73500",
+      "color": "Cinza"
+    }
+  }
+}
