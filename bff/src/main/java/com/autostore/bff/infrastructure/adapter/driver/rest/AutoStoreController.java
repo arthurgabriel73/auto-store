@@ -106,8 +106,9 @@ public class AutoStoreController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = @ExampleObject(value
                     = CREATE_ORDER)))
             @RequestBody CreateOrderRequest request) {
-        // TODO: Get customer from auth token provided in the request header
-        return new ResponseEntity<>(orderService.createOrder(request), HttpStatus.CREATED);
+        var authToken = userService.authUser(AuthUserRequest.builder().cpf(request.getCustomer()).build());
+        var authenticatedRequest = new CreateOrderRequest(request.getProducts(), authToken.accessToken());
+        return new ResponseEntity<>(orderService.createOrder(authenticatedRequest), HttpStatus.CREATED);
     }
 
     @PostMapping("/register-product-validation")

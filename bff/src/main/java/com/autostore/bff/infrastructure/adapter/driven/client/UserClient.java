@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface UserClient extends UserGateway {
 
     @Override
-    @PostMapping
+    @PostMapping("/auth")
     AuthUserResponse authUser(AuthUserRequest request);
 
     @Override
