@@ -3,7 +3,8 @@ package com.autostore.payment.infrastructure.adapter.driver.event;
 
 import com.autostore.payment.application.port.driver.ProcessPaymentDriverPort;
 import com.autostore.payment.application.port.driver.model.command.ProcessPaymentCommand;
-import com.autostore.payment.application.port.event.OrderEvent;
+import com.autostore.payment.application.port.event.Order;
+import com.autostore.payment.domain.DomainEvent;
 import com.autostore.payment.infrastructure.adapter.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class KafkaConsumer {
     )
     public void consumeProcessPaymentCommand(String payload) {
         log.info("Receiving event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         processPaymentDriverPort.execute(new ProcessPaymentCommand(event));
     }
 
@@ -35,7 +36,7 @@ public class KafkaConsumer {
     )
     public void consumeRefundPaymentCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         processPaymentDriverPort.rollback(event);
     }
 

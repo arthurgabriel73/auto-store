@@ -3,7 +3,8 @@ package com.autostore.inventory.infrastructure.adapter.driver.event;
 
 import com.autostore.inventory.application.port.driver.UpdateInventoryDriverPort;
 import com.autostore.inventory.application.port.driver.model.command.UpdateInventoryCommand;
-import com.autostore.inventory.application.port.event.OrderEvent;
+import com.autostore.inventory.application.port.event.Order;
+import com.autostore.inventory.domain.DomainEvent;
 import com.autostore.inventory.infrastructure.adapter.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class KafkaConsumer {
     )
     public void consumeUpdateInventoryCommand(String payload) {
         log.info("Receiving event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         updateInventoryDriverPort.execute(new UpdateInventoryCommand(event));
     }
 
@@ -35,7 +36,7 @@ public class KafkaConsumer {
     )
     public void consumeRollbackInventoryUpdateCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         updateInventoryDriverPort.rollback(event);
     }
 

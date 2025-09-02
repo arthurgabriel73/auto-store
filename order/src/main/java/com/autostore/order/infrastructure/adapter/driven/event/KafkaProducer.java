@@ -3,6 +3,7 @@ package com.autostore.order.infrastructure.adapter.driven.event;
 
 import com.autostore.order.application.port.driven.EventProducer;
 import com.autostore.order.domain.DomainEvent;
+import com.autostore.order.domain.Order;
 import com.autostore.order.infrastructure.adapter.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class KafkaProducer implements EventProducer {
 
 
     @Override
-    public void sendEvent(DomainEvent<?> event, String topic) {
+    public void sendEvent(DomainEvent<Order> event, String topic) {
         String payload = jsonUtil.toJson(event);
         try {
             log.info("Sending event to topic {} with data: {}", topic, payload);

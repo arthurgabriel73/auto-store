@@ -2,8 +2,12 @@ package com.autostore.payment.application;
 
 
 import com.autostore.payment.application.port.driver.model.command.ProcessPaymentCommand;
-import com.autostore.payment.application.port.event.*;
+import com.autostore.payment.application.port.event.Order;
+import com.autostore.payment.application.port.event.OrderProducts;
+import com.autostore.payment.application.port.event.Product;
+import com.autostore.payment.application.port.event.Topic;
 import com.autostore.payment.application.usecase.ProcessPaymentUseCase;
+import com.autostore.payment.domain.DomainEvent;
 import com.autostore.payment.domain.Payment;
 import com.autostore.payment.domain.PaymentStatus;
 import com.autostore.payment.infrastructure.adapter.driven.event.FakeEventProducer;
@@ -22,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ProcessPaymentUseCaseTest {
 
     private static final ProcessPaymentCommand command = new ProcessPaymentCommand(
-            OrderEvent
-                    .builder()
+            DomainEvent.<Order>
+                            builder()
                     .id("event-id")
                     .createdAt(LocalDateTime.now())
                     .payload(Order

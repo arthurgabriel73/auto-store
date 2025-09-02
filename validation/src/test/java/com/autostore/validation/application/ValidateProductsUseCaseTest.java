@@ -2,8 +2,12 @@ package com.autostore.validation.application;
 
 
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
-import com.autostore.validation.application.port.event.*;
+import com.autostore.validation.application.port.event.Order;
+import com.autostore.validation.application.port.event.OrderProducts;
+import com.autostore.validation.application.port.event.Product;
+import com.autostore.validation.application.port.event.Topic;
 import com.autostore.validation.application.usecase.ValidateProductsUseCase;
+import com.autostore.validation.domain.DomainEvent;
 import com.autostore.validation.domain.ValidationProduct;
 import com.autostore.validation.infrastructure.adapter.driven.event.FakeEventProducer;
 import com.autostore.validation.infrastructure.adapter.driven.persistence.InMemoryValidationProductRepository;
@@ -22,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ValidateProductsUseCaseTest {
 
     private static final ValidateProductsCommand command = new ValidateProductsCommand(
-            OrderEvent
-                    .builder()
+            DomainEvent.<Order>
+                            builder()
                     .id("event-id")
                     .createdAt(LocalDateTime.now())
                     .payload(Order

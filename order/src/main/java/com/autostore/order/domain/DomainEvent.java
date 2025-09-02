@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class DomainEvent<T> {
 
     protected String id;
+    protected String transactionId;
     protected T payload;
     protected LocalDateTime createdAt;
 

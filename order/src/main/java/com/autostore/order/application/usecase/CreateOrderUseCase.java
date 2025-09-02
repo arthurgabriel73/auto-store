@@ -6,8 +6,8 @@ import com.autostore.order.application.port.driven.OrderRepository;
 import com.autostore.order.application.port.driver.CreateOrderDriverPort;
 import com.autostore.order.application.port.driver.model.command.CreateOrderCommand;
 import com.autostore.order.application.port.driver.model.command.CreateOrderCommandOutput;
-import com.autostore.order.application.port.event.OrderEvent;
 import com.autostore.order.application.port.event.Topic;
+import com.autostore.order.domain.DomainEvent;
 import com.autostore.order.domain.Order;
 import com.autostore.order.domain.OrderCustomer;
 import com.autostore.order.domain.TransactionId;
@@ -35,11 +35,10 @@ public class CreateOrderUseCase implements CreateOrderDriverPort {
         return new CreateOrderCommandOutput(createdOrder);
     }
 
-    private OrderEvent createOrderEvent(Order order) {
-        return OrderEvent
-                .builder()
+    private DomainEvent<Order> createOrderEvent(Order order) {
+        return DomainEvent.<Order>
+                        builder()
                 .id(order.getId())
-                .orderId(order.getId())
                 .transactionId(order.getTransactionId())
                 .payload(order)
                 .createdAt(order.getCreatedAt())

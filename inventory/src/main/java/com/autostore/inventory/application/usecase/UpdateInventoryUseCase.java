@@ -8,10 +8,10 @@ import com.autostore.inventory.application.port.driven.InventoryRepository;
 import com.autostore.inventory.application.port.driver.UpdateInventoryDriverPort;
 import com.autostore.inventory.application.port.driver.model.command.UpdateInventoryCommand;
 import com.autostore.inventory.application.port.event.Order;
-import com.autostore.inventory.application.port.event.OrderEvent;
 import com.autostore.inventory.application.port.event.OrderProducts;
 import com.autostore.inventory.application.port.event.Topic;
 import com.autostore.inventory.domain.Activity;
+import com.autostore.inventory.domain.DomainEvent;
 import com.autostore.inventory.domain.Inventory;
 import com.autostore.inventory.domain.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class UpdateInventoryUseCase implements UpdateInventoryDriverPort {
         }
     }
 
-    private void requireActivityNotExists(OrderEvent event) {
+    private void requireActivityNotExists(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         if (activityRepository.existsByOrderIdAndTransactionId(orderId, transactionId))
@@ -51,7 +51,7 @@ public class UpdateInventoryUseCase implements UpdateInventoryDriverPort {
                             + transactionId);
     }
 
-    private void registerActivity(OrderEvent event) {
+    private void registerActivity(DomainEvent<Order> event) {
         event
                 .getPayload()
                 .products()
@@ -69,7 +69,7 @@ public class UpdateInventoryUseCase implements UpdateInventoryDriverPort {
     }
 
     private Activity createInventoryActivity(
-            OrderEvent event,
+            DomainEvent<Order> event,
             OrderProducts product,
             Inventory inventory) {
         return Activity
@@ -92,7 +92,7 @@ public class UpdateInventoryUseCase implements UpdateInventoryDriverPort {
     }
 
     @Override
-    public void rollback(OrderEvent event) {
+    public void rollback(DomainEvent<Order> event) {
         try {
             returnInventoryToPreviousValues(event);
             eventProducer.sendEvent(event, Topic.INVENTORY_SERVICE_INVENTORY_ROLLBACK_SUCCESS_V1.getTopic());
@@ -102,7 +102,7 @@ public class UpdateInventoryUseCase implements UpdateInventoryDriverPort {
         }
     }
 
-    private void returnInventoryToPreviousValues(OrderEvent event) {
+    private void returnInventoryToPreviousValues(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         activityRepository

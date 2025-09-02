@@ -3,7 +3,8 @@ package com.autostore.validation.infrastructure.adapter.driver.event;
 
 import com.autostore.validation.application.port.driver.ValidateProductsDriverPort;
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
-import com.autostore.validation.application.port.event.OrderEvent;
+import com.autostore.validation.application.port.event.Order;
+import com.autostore.validation.domain.DomainEvent;
 import com.autostore.validation.infrastructure.adapter.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class KafkaConsumer {
     )
     public void consumeValidateOrderCommand(String payload) {
         log.info("Receiving event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         validateProductsDriverPort.execute(new ValidateProductsCommand(event));
     }
 
@@ -35,7 +36,7 @@ public class KafkaConsumer {
     )
     public void consumeRollbackOrderValidationCommand(String payload) {
         log.info("Received rollback event {}", payload);
-        OrderEvent event = jsonUtil.fromJson(jsonUtil.toJson(payload), OrderEvent.class);
+        DomainEvent<Order> event = jsonUtil.fromJson(jsonUtil.toJson(payload), DomainEvent.class);
         validateProductsDriverPort.rollback(event);
     }
 

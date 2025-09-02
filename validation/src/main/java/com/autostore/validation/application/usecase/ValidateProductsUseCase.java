@@ -8,8 +8,9 @@ import com.autostore.validation.application.port.driven.ValidationProductReposit
 import com.autostore.validation.application.port.driven.ValidationRepository;
 import com.autostore.validation.application.port.driver.ValidateProductsDriverPort;
 import com.autostore.validation.application.port.driver.model.command.ValidateProductsCommand;
-import com.autostore.validation.application.port.event.OrderEvent;
+import com.autostore.validation.application.port.event.Order;
 import com.autostore.validation.application.port.event.Topic;
+import com.autostore.validation.domain.DomainEvent;
 import com.autostore.validation.domain.Validation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class ValidateProductsUseCase implements ValidateProductsDriverPort {
         }
     }
 
-    private void requireValidationNotExists(OrderEvent event) {
+    private void requireValidationNotExists(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         if (validationRepository.existsByOrderIdAndTransactionId(orderId, transactionId))
@@ -46,7 +47,7 @@ public class ValidateProductsUseCase implements ValidateProductsDriverPort {
             );
     }
 
-    private void requireProductsExists(OrderEvent event) {
+    private void requireProductsExists(DomainEvent<Order> event) {
         var products = event.getPayload().products();
         products.forEach(product -> {
                     if (!validationProductRepository.existsByCode(product.product().code()))
@@ -56,7 +57,7 @@ public class ValidateProductsUseCase implements ValidateProductsDriverPort {
         );
     }
 
-    private void createValidation(OrderEvent event, boolean success) {
+    private void createValidation(DomainEvent<Order> event, boolean success) {
         var validation = Validation
                 .builder()
                 .orderId(event.getPayload().id())
@@ -69,7 +70,7 @@ public class ValidateProductsUseCase implements ValidateProductsDriverPort {
     }
 
     @Override
-    public void rollback(OrderEvent event) {
+    public void rollback(DomainEvent<Order> event) {
         try {
             markValidationAsFailed(event);
             eventProducer.sendEvent(event, Topic.VALIDATION_SERVICE_VALIDATION_ROLLBACK_SUCCESS_V1.getTopic());
@@ -79,7 +80,7 @@ public class ValidateProductsUseCase implements ValidateProductsDriverPort {
         }
     }
 
-    private void markValidationAsFailed(OrderEvent event) {
+    private void markValidationAsFailed(DomainEvent<Order> event) {
         var orderId = event.getPayload().id();
         var transactionId = event.getPayload().transactionId();
         validationRepository
