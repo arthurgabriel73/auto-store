@@ -28,4 +28,8 @@ public class DomainEvent<T> {
         eventHistory.add(history);
     }
 
+    public void cloneHistory(List<History> history) {
+        this.eventHistory = new ArrayList<>(history);
+    }
+
 }

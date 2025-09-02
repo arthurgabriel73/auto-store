@@ -32,7 +32,7 @@ public class OrderOrchestratorService implements OrderOrchestratorServiceDriverP
 
     private void addEventHistory(DomainEvent<Order> event, Topic topic) {
         var existingEvent = eventRepository.findTop1ByTransactionIdOrderByCreatedAtDesc(event.getTransactionId());
-        existingEvent.ifPresent(orderDomainEvent -> orderDomainEvent.getEventHistory().forEach(event::addToHistory));
+        existingEvent.ifPresent(orderDomainEvent -> event.cloneHistory(orderDomainEvent.getEventHistory()));
         event.addToHistory(History.builder()
                 .topic(topic.getTopic())
                 .createdAt(LocalDateTime.now())
