@@ -3,6 +3,8 @@ package com.autostore.bff.domain;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 
 @Getter
 public enum Topic {
@@ -43,5 +45,18 @@ public enum Topic {
 
     Topic(String s) {
         this.topic = s;
+    }
+
+    public static String[] getAllTopicNames() {
+        return Arrays.stream(values())
+                .map(Topic::getTopic)
+                .toArray(String[]::new);
+    }
+
+    public static Topic fromString(String topicName) {
+        return Arrays.stream(values())
+                .filter(t -> t.getTopic().equals(topicName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No topic found with name: " + topicName));
     }
 }
