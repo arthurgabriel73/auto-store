@@ -2,16 +2,14 @@
 
 ## Introdução
 
-A **AutoStoreApi** é uma aplicação backend desenvolvida aplicando: Arquitetura de Microsserviços, Saga Orquestrado.
+A **AutoStoreApi** é uma aplicação backend desenvolvida aplicando: Arquitetura de Microsserviços, Saga Orquestrada.
 O objetivo é gerir o estoque de uma loja de automóveis, ordens de compra e vendas, e controle de clientes.
 O ponto-chave da arquitetura proposta é a resiliência e consistência dos dados, mesmo em cenários de falhas,
-que conseguimos graças ao controle de transações distribuídas utilizando o padrão Saga Orquestrado.
+que conseguimos graças ao controle de transações distribuídas utilizando o padrão Saga Orquestrada.
 
 ### Video Apresentação
 
-*In Progress...*
-
-[![Watch the video](https://img.youtube.com/vi/0b1g2a3c4d5e/maxresdefault.jpg)](https://www.youtube.com/watch?v=1234567890)
+[![Watch the video](docs/yt.png)](https://youtu.be/mFh-bVUvnFM)
 
 ## Summary
 
